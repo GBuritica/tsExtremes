@@ -19,7 +19,16 @@
     <loc>/index.html</loc>
   </url>
   <url>
+    <loc>/reference/alphaestimator.html</loc>
+  </url>
+  <url>
+    <loc>/reference/alphaestimator2.html</loc>
+  </url>
+  <url>
     <loc>/reference/hillestimate.html</loc>
+  </url>
+  <url>
+    <loc>/reference/hillestimator.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
