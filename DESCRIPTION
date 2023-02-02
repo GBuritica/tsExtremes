@@ -1,7 +1,7 @@
 Package: tsExtremes
 Type: Package
 Title: Time Series Analysis of Extremes 
-Version: 0.0.0.9000
+Version: 0.0.0.1
 Authors@R: 
     person(given = "Gloria",
            family = "Buriticá",
@@ -10,15 +10,20 @@ Authors@R:
            comment = c(ORCID = "0000-0001-8527-1165"))
 Description: Tools for the analysis of univariate and multivariate extremes of time series.
 BugReports: https://github.com/GBuritica/tsExtremes/issues/
-URL: https://github.com/GBuritica/ts/
+URL: https://github.com/GBuritica/tsExtremes
 License: MIT + file LICENSE
 Depends: 
     R (>= 2.10)
 Imports: 
-   evd 
+   evd, 
+   fExtremes,
+   ExtDist,
+   boot  	
+	
 Suggests:
     boot,
     rmarkdown
+
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
