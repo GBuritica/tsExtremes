@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' sample   <- abs( arima.sim(n = 8000, list(ar=0.5, ma=0), rand.gen=function(n) rt(n,df=4) ) )
-#' alphaestimator2(sample)
+#' h  <- alphaestimator2(sample)
 alphaestimator2 <- function(path0){
   alpha  <- fExtremes::shaparmPlot(-path0, plottype = "upper", doplot=FALSE) ## Upper is blue
   alpha1 <- 1/alpha$Upper[4,2:4]
@@ -39,8 +39,8 @@ alphaestimator2 <- function(path0){
 #'
 #' @examples
 #' sample   <- abs( arima.sim(n = 8000, list(ar=0.5, ma=0), rand.gen=function(n) rt(n,df=4) ) )
-#' alphaestimator(sample, plot=TRUE , R0 = 100,  hill=TRUE,   k1 = 1000 )
-#' alphaestimator(sample, plot=TRUE , R0 = 100,  hill=FALSE,  k1 = 1000 )
+#' h <- alphaestimator(sample, plot=TRUE , R0 = 100,  hill=TRUE,   k1 = 1000 )
+#' h <- alphaestimator(sample, plot=TRUE , R0 = 100,  hill=FALSE,  k1 = 1000 )
 #' abline(h=0.25,col = "red")
 alphaestimator  <- function(sample,k1=floor(n^(0.7)),plot=FALSE,R0=100,hill=FALSE,ylim0=NULL){
   ### n + transforms to log
