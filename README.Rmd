@@ -30,24 +30,3 @@ You can install the package from github using
 devtools::install_github('GBuritica/tsExtremes')
 ```
 
-## Example
-
-Please see below a classical data analysis using the tsExtremes package.
-
-```{r example}
-library(tsExtremes)
-## basic example code
-```
-
-The package includes the daily rainfall amounts data set of weather stations from nine different locations in France.
-
-```{r rainfall}
-head(rainfall)
-```
-
-For example, the (tail) index Hill Plot of summer rainfall in Brest is ploted below.
-
-```{r hill, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
-h <- hillestimate(rainfall$BREST[rainfall$SEASON=="SUMMER"], plot=T)
-## vector of Hill estimates
-```
