@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">tsExtremes</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.1</span>
       </span>
     </div>
 
@@ -50,7 +50,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/Example-Analysis.html">Example-Analysis</a>
+      <a href="articles/Example-Analysis.html">Example - Tail index</a>
     </li>
   </ul>
 </li>
@@ -87,30 +87,6 @@
 <p>You can install the package from github using</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'GBuritica/tsExtremes'</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
-</h2>
-<p>Please see below a classical data analysis using the tsExtremes package.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GBuritica/ts/" class="external-link">tsExtremes</a></span><span class="op">)</span></span>
-<span><span class="co">## basic example code</span></span></code></pre></div>
-<p>The package includes the daily rainfall amounts data set of weather stations from nine different locations in France.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     y.date BREST LANVEOC QUIMPER BORMES LE.LUC HYERES NANCY METZ ROVILLE SEASON</span></span>
-<span><span class="co">#&gt; 1 19760101   0.3     0.4     2.1      0      0      0   2.3  4.9     5.0 WINTER</span></span>
-<span><span class="co">#&gt; 2 19760102   0.1     0.0     0.2      0      0      0   1.4  2.1     9.0 WINTER</span></span>
-<span><span class="co">#&gt; 3 19760103   0.0     0.1     0.0      0      0      0   1.8  0.8     2.4 WINTER</span></span>
-<span><span class="co">#&gt; 4 19760104   1.7     1.0     1.4      0      0      0   0.0  0.0     0.0 WINTER</span></span>
-<span><span class="co">#&gt; 5 19760105   0.0     0.0     0.0      0      0      0   0.7  0.5     0.9 WINTER</span></span>
-<span><span class="co">#&gt; 6 19760106   0.0     0.0     0.0      0      0      0   0.6  1.3     1.7 WINTER</span></span></code></pre></div>
-<p>For example, the (tail) index Hill Plot of summer rainfall in Brest is ploted below.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/hillestimate.html">hillestimate</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">$</span><span class="va">BREST</span><span class="op">[</span><span class="va">rainfall</span><span class="op">$</span><span class="va">SEASON</span><span class="op">==</span><span class="st">"SUMMER"</span><span class="op">]</span>, plot<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-hill-1.png" width="100%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## vector of Hill estimates</span></span></code></pre></div>
 </div>
 </div>
   </div>
