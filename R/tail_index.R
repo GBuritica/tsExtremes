@@ -9,11 +9,11 @@
 #' @return A data.frame of hill estimates as a function of k.
 #' @export
 #'
-#' @example
-#' hillestimate(rainfall$LANVEOC[rainfall$SEASON=='SPRING'], 1:200)
-#' hillestimate(rainfall$LANVEOC[rainfall$SEASON=='SPRING'], plot=T)
+#' @examples
+#' hillestimator(rainfall$LANVEOC[rainfall$SEASON=='SPRING'], 1:200)
+#' hillestimator(rainfall$LANVEOC[rainfall$SEASON=='SPRING'], plot=T)
 
-hillestimate <- function(path, k0=NULL, plot=F){
+hillestimator <- function(path, k0=NULL, plot=F){
   n      <- length(path)
   if(is.null(k0)){
     if(plot) k0 <- 1:floor(n*0.05)
