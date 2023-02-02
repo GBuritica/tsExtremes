@@ -35,7 +35,7 @@ It returns the unbiased Hill estimator from de Haan et al. with tuning parameter
 }
 \examples{
 sample   <- abs( arima.sim(n = 8000, list(ar=0.5, ma=0), rand.gen=function(n) rt(n,df=4) ) )
-alphaestimator(sample, plot=TRUE , R0 = 100,  hill=TRUE,   k1 = 1000 )
-alphaestimator(sample, plot=TRUE , R0 = 100,  hill=FALSE,  k1 = 1000 )
+h <- alphaestimator(sample, plot=TRUE , R0 = 100,  hill=TRUE,   k1 = 1000 )
+h <- alphaestimator(sample, plot=TRUE , R0 = 100,  hill=FALSE,  k1 = 1000 )
 abline(h=0.25,col = "red")
 }
