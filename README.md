@@ -6,50 +6,51 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of tsExtremes is to …
+The package tsExtremes aims to compile functions for assessing the time
+dependencies of extremes.
 
 ## Installation
 
-You can install the development version of tsExtremes from
-[GitHub](https://github.com/) with:
+<!-- You can install the released version of tsExtremes from [CRAN](https://CRAN.R-project.org) with: -->
+
+You can install the package from github using
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("GBuritica/tsExtremes")
+devtools::install_github('GBuritica/tsExtremes')
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+Please see below a classical data analysis using the tsExtremes package.
 
 ``` r
 library(tsExtremes)
 ## basic example code
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+The package includes the daily rainfall amounts data set of weather
+stations from nine different locations in France.
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+head(rainfall)
+#>     y.date BREST LANVEOC QUIMPER BORMES LE.LUC HYERES NANCY METZ ROVILLE SEASON
+#> 1 19760101   0.3     0.4     2.1      0      0      0   2.3  4.9     5.0 WINTER
+#> 2 19760102   0.1     0.0     0.2      0      0      0   1.4  2.1     9.0 WINTER
+#> 3 19760103   0.0     0.1     0.0      0      0      0   1.8  0.8     2.4 WINTER
+#> 4 19760104   1.7     1.0     1.4      0      0      0   0.0  0.0     0.0 WINTER
+#> 5 19760105   0.0     0.0     0.0      0      0      0   0.7  0.5     0.9 WINTER
+#> 6 19760106   0.0     0.0     0.0      0      0      0   0.6  1.3     1.7 WINTER
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/v1/examples>.
+For example, the (tail) index Hill Plot of summer rainfall in Brest is
+ploted below.
 
-You can also embed plots, for example:
+``` r
+h <- hillestimate(rainfall$BREST[rainfall$SEASON=="SUMMER"], plot=T)
+```
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+<img src="man/figures/README-hill-1.png" width="100%" style="display: block; margin: auto;" />
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+``` r
+## vector of Hill estimates
+```
