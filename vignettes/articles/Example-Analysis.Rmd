@@ -13,10 +13,12 @@ knitr::opts_chunk$set(
 library(tsExtremes)
 ```
 
+
 ## Hill estimation
 
 To get started with the tsExtremes package, we have included a data set of Precipitations. The rainfall variable contains daily rainfall records from nine different weather stations in France. The data and season of each record is available. To compute the (tail) index Hill Plot of summer rainfall in Brest we use the function below.
 
 ```{r hill, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
-h <- hillestimate(rainfall$BREST[rainfall$SEASON=="SUMMER"], plot=T)
+h <- hillestimator(rainfall$BREST[rainfall$SEASON=="SPRING"], plot=T)
+h <- alphaestimator(rainfall$BREST[rainfall$SEASON=="SPRING"], plot=TRUE , R0 = 100,  hill=T ,  k1 = 300 )
 ```
