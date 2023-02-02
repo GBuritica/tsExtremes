@@ -20,5 +20,5 @@ It uses the fExtreme code.
 }
 \examples{
 sample   <- abs( arima.sim(n = 8000, list(ar=0.5, ma=0), rand.gen=function(n) rt(n,df=4) ) )
-alphaestimator2(sample)
+h  <- alphaestimator2(sample)
 }
