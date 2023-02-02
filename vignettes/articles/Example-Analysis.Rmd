@@ -1,5 +1,5 @@
 ---
-title: "Example - Tail index"
+title: "Tail index inference"
 ---
 
 ```{r, include = FALSE}
