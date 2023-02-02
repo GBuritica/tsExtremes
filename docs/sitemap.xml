@@ -7,6 +7,9 @@
     <loc>/LICENSE-text.html</loc>
   </url>
   <url>
+    <loc>/articles/Cluster-functional-Analysis.html</loc>
+  </url>
+  <url>
     <loc>/articles/Example-Analysis.html</loc>
   </url>
   <url>
@@ -19,10 +22,25 @@
     <loc>/index.html</loc>
   </url>
   <url>
+    <loc>/reference/ARCH2m.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ARCHm.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ARm.html</loc>
+  </url>
+  <url>
     <loc>/reference/alphaestimator.html</loc>
   </url>
   <url>
     <loc>/reference/alphaestimator2.html</loc>
+  </url>
+  <url>
+    <loc>/reference/eiCP.html</loc>
+  </url>
+  <url>
+    <loc>/reference/functionalCP.html</loc>
   </url>
   <url>
     <loc>/reference/hillestimate.html</loc>
@@ -32,6 +50,9 @@
   </url>
   <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/piCP.html</loc>
   </url>
   <url>
     <loc>/reference/rainfall.html</loc>
