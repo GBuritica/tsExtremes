@@ -1,0 +1,57 @@
+---
+title: "Cluster inference"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tsExtremes)
+```
+
+## Cluster inference
+
+The tsExtremes allows to sample from classical time series models, estimate the tail index of regular variation, and compute cluster statistics. First, let's start by simulations a time series and computing its tail index.
+
+```{r time series, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
+path         <- ARCHm(20000)
+alphae       <- 1/alphaestimator(path,k1=1200)$xi 
+theta        <- 0.2792
+```
+
+With the values that we computed, we are now ready to infer classical cluster statistics. For example, the extremal index of the series and the cluster lengths. The functions piCP computes estimates for this quantities as a function of k.
+
+```{r cluster statistic, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
+estimate     <-  piCP(path,alphae) 
+ks           <-  estimate$k
+```
+
+Notice that this method also computes estimates for the asymptotic variance which we can use to draw the confidence intervals. The red line corresponds to the true value.
+
+
+```{r plot cluster, echo = F, fig.height = 4, fig.width = 9, fig.align = "center"}
+plot(ks, estimate$estimate$Theta,type = "l", xlim = c(2,100) , ylim = c(0,1),  xlab = "k", ylab ="Estimate")
+lines(ks,estimate$estimate$Theta
+      + qnorm(0.975)*sqrt(abs(estimate$variance$Theta)/ks) , lty = 3, col ='black' )
+lines(ks, estimate$estimate$Theta
+      - qnorm(0.975)*sqrt(abs(estimate$variance$Theta)/ks) , lty = 3, col ='black' )
+points(ks,estimate$estimate$Theta, pch = 16, cex = 0.5)
+abline(h=theta, col = 'red', lty = 2)
+```
+Similarly, we can produce this plots with the option plot=T. The dashed line in blue gives the estimate for k = 10. 
+```{r plot cluster 2, echo = T, fig.height = 8, fig.width = 9, fig.align = "center"}
+estimate     <-  piCP(path,alphae,plot=T) 
+```
+
+Finally, recall the rainfall data set that we presented in the tail index analysis. We can now apply our method to this data set.
+
+```{r rainfall cluster, echo = T,fig.height = 8, fig.width = 9, fig.align = "center"}
+path         <- rainfall$BREST[rainfall$SEASON=="SPRING"]
+alphae       <- 1/alphaestimator(path,k1=150)$xi 
+estimate     <- piCP(path,alphae,plot=T) 
+```
+
