@@ -8,47 +8,68 @@
 #######################################################################
 #######################################################################
 #######################################################################
-require(fExtremes)
-require(boot)
-require(ExtDist)
-require(evd)
 #######################################################################
-#set.seed(2895)
-#sample   <- abs( arima.sim(n = 8000, list(ar=0.5, ma=0), rand.gen=function(n) rt(n,df=4) ) )
-#alphaestimator(sample, plot=TRUE , R0 = 100,  hill=TRUE,   k1 = 1000 )
-#alphaestimator(sample, plot=TRUE , R0 = 100,  hill=FALSE,  k1 = 1000 )
-#abline(h=0.25,col = "red")
-#######################################################################
-## Main functions: 
+## Main functions:
 ##      - alphaestimator2: results from fExtreme code.
-##      - alphaestimator:  unbiased Hill estimator with tuning parameter rho = 2 implementation.
+##      - alphaestimator:
 
 #######################################################################
 ## alphaestimator2
-## shaparmPlot function on fExtremes
-## Mean : Pickands, Hill and DeHaan estimator at 96th empirical quantile.
+#' @description
+#'  This function computes the (tail)-index.
+#'  It returns the mean estimate from the Pickands, Hill and DeHaan estimators
+#'  at 96th empirical quantile.
+#'  It uses the fExtreme code.
+#'
+#' @param path0 (Vector of univariate observations)
+#'
+#' @return An integer with the tail - index estimate
+#' @export
+#'
+#' @examples
+#' sample   <- abs( arima.sim(n = 8000, list(ar=0.5, ma=0), rand.gen=function(n) rt(n,df=4) ) )
+#' alphaestimator2(sample)
 alphaestimator2 <- function(path0){
-  alpha  <- shaparmPlot(-path0, plottype = "upper", doplot=FALSE) ## Upper is blue
+  alpha  <- fExtremes::shaparmPlot(-path0, plottype = "upper", doplot=FALSE) ## Upper is blue
   alpha1 <- 1/alpha$Upper[4,2:4]
   alpha  <- sum(alpha1)/3
   return(alpha)
 }
 #######################################################################
 ## alphaestimator
-##
-## Parameters: 
+#' @description
+#' This function computes the (tail)-index as a function of k
+#' It returns the unbiased Hill estimator from de Haan et al. with tuning parameter rho = 2
+## Parameters:
 ##        sample -> path of nonnegative entries : no NA.
-##        k1     -> order statistics to consider.  
-alphaestimator  <- function(sample,k1=floor(n^(0.7)),plot=FALSE,R0=1,hill=FALSE,ylim0=NULL){
+##        k1     -> order statistics to consider.
+#' Title
+#'
+#' @param sample (Vector of nonnegative univariate entries)
+#' @param k1 (Integer indicating the number of high order statistics to consider for inference)
+#' @param plot (T or F indicate if the plot of Hill estimates as a function of k must be shown)
+#' @param R0 (Integer with the number of bootstrap replicates to consider for computing confidence intervals)
+#' @param hill (T or F indicate if the classical Hill-plot is also plotted)
+#' @param ylim0 (Vector with lower and upper bounds of the y-axis for the plot )
+#'
+#' @return A data.frame with the xi estimate and the confidence intervals lower and upper bounds.
+#' @export
+#'
+#' @examples
+#' sample   <- abs( arima.sim(n = 8000, list(ar=0.5, ma=0), rand.gen=function(n) rt(n,df=4) ) )
+#' alphaestimator(sample, plot=TRUE , R0 = 100,  hill=TRUE,   k1 = 1000 )
+#' alphaestimator(sample, plot=TRUE , R0 = 100,  hill=FALSE,  k1 = 1000 )
+#' abline(h=0.25,col = "red")
+alphaestimator  <- function(sample,k1=floor(n^(0.7)),plot=FALSE,R0=100,hill=FALSE,ylim0=NULL){
   ### n + transforms to log
   n          <- length(sample)
-  lsorted    <- log(sort(abs(sample))) 
-  #################### Estimating rho parameter 
+  lsorted    <- log(sort(abs(sample)))
+  #################### Estimating rho parameter
   krhomax   <- floor( min( (sum(!lsorted==-Inf)-1),n, 2*n/log(log(n)) ) ) ## limits for the k(rho)
   rhoes     <- sapply( 2:min(krhomax, max(floor(n^0.7),k1)  ) , function(l) rho_Estimate2( l, lsorted , n  ) )
-  rhohat    <- median(rhoes, na.rm = TRUE) 
+  rhohat    <- median(rhoes, na.rm = TRUE)
   ################### Estimating gamma
-  es        <- gammaes2(lsorted, n,rhohat,k1) 
+  es        <- gammaes2(lsorted, n,rhohat,k1)
   al        <- (es$hill-es$biais)                   ## Unbiased estimator
   al2       <- es$hill                              ## Hill estimator
   ################## Defyining Bootstrap statistic
@@ -59,23 +80,23 @@ alphaestimator  <- function(sample,k1=floor(n^(0.7)),plot=FALSE,R0=1,hill=FALSE,
      es  <- NULL
      while(k1 > n^ind[j]){
        krhoes     <- sapply( 2:min(krhomax, floor(n^0.7) ) , function(i) rho_Estimate2( i, lpath , n  ) )
-       krhohat    <- median(krhoes, na.rm = TRUE) 
+       krhohat    <- median(krhoes, na.rm = TRUE)
        esp        <- gammaes2(lpath,n,krhohat, 1:floor(n^0.7) )
-       
+
        krhoes     <- sapply( 2:min(krhomax, floor(n^ind[j])  ) , function(i) rho_Estimate2( i, lpath , n  ) )
-       krhohat    <- median(krhoes, na.rm = TRUE) 
-       if(j==1)      esp    <- gammaes2(lpath,n,krhohat, 1:floor(n^ind[j]) ) 
-       if(j > 1)     esp    <- rbind(esp,gammaes2(lpath,n,krhohat, (floor(n^ind[j-1])+1):floor(n^ind[j]) )) 
+       krhohat    <- median(krhoes, na.rm = TRUE)
+       if(j==1)      esp    <- gammaes2(lpath,n,krhohat, 1:floor(n^ind[j]) )
+       if(j > 1)     esp    <- rbind(esp,gammaes2(lpath,n,krhohat, (floor(n^ind[j-1])+1):floor(n^ind[j]) ))
        j <- j+1
      }
        krhoes      <- sapply( 2:min(krhomax, k1  ) , function(i) rho_Estimate2( i, lpath , n  ) )
-       krhohat    <- median(krhoes, na.rm = TRUE) 
-       esp        <- rbind(esp,gammaes2(lpath,n,krhohat,  (floor(n^ind[j-1])+1):k1 )) 
+       krhohat    <- median(krhoes, na.rm = TRUE)
+       esp        <- rbind(esp,gammaes2(lpath,n,krhohat,  (floor(n^ind[j-1])+1):k1 ))
       return(  c( (esp$hill-esp$biais) , esp$hill ) )
   }           ## Takes longer to run. Also bootstrapping the estimate krho.
   stathill         <- function(data){
     lpath      <- log(sort(data))
-    esp        <- gammaes2(lpath,n, rhohat,  1:k1 ) 
+    esp        <- gammaes2(lpath,n, rhohat,  1:k1 )
     return(  c( (esp$hill-esp$biais) , esp$hill ) )
   }
   ################## Bootstrap replicates
@@ -87,12 +108,12 @@ alphaestimator  <- function(sample,k1=floor(n^(0.7)),plot=FALSE,R0=1,hill=FALSE,
     es  <- NULL
     while(k1 > n^ind[j]){
         rhoesp     <- sapply( 2:min(krhomax, floor(n^ind[j])  ) , function(l) rho_Estimate2( l, lsorted , n  ) )
-        rhohatp    <- median(rhoes, na.rm = TRUE) 
-        if(j==1)      es    <- gammaes2(lsorted, n,rhohatp, 1:floor(n^ind[j]) ) 
-        if(j > 1)     es    <- rbind(es,gammaes2(lsorted, n,rhohatp, (floor(n^ind[j-1])+1):floor(n^ind[j]) )) 
+        rhohatp    <- median(rhoes, na.rm = TRUE)
+        if(j==1)      es    <- gammaes2(lsorted, n,rhohatp, 1:floor(n^ind[j]) )
+        if(j > 1)     es    <- rbind(es,gammaes2(lsorted, n,rhohatp, (floor(n^ind[j-1])+1):floor(n^ind[j]) ))
         j <- j+1
     }
-    es   <- rbind(es,gammaes2(lsorted, n,rhohat, (floor(n^ind[j-1])+1):k1 )) 
+    es   <- rbind(es,gammaes2(lsorted, n,rhohat, (floor(n^ind[j-1])+1):k1 ))
     ##################
     ################## Bootstrap
     b          <-  tsboot(sample,statistic=stathill, R=R0, sim = "geom", l = 200 )
@@ -103,16 +124,16 @@ alphaestimator  <- function(sample,k1=floor(n^(0.7)),plot=FALSE,R0=1,hill=FALSE,
       if(length(ylim0)==0) ylim0 <- c(min(IC1, IC2),max((IC1),IC2))
       if(hill){
           plot.ts((es$hill-es$biais), ylim = ylim0 , main = "Hill plot" ,xlab = "k", ylab = " ",col = "darkblue")
-          lines( es$hill, col = "grey") 
+          lines( es$hill, col = "grey")
           for(i in 1:2) lines(IC2[i,],lty=3, col = "grey")
           for(i in 1:2) lines(IC1[i,],lty=2, col = "darkblue")
-          
+
           #polygon( x=c(1:length(es$hill), rev(1:length(es$hill) ) ), y=c(IC2[2,],rev(IC2[1,]) ), col = "grey" , lty=1, density=20, angle = 40)
           #polygon( x=c(1:length(es$hill), rev(1:length(es$hill) ) ), y=c(IC1[2,],rev(IC1[1,]) ), col = "skyblue" , lty=1, density=20, angle = 90)
           #sapply(1:2, function(k) lines( IC2[k,], lty = 1, col = "grey"))
-      
-          #lines( (es$hill), col = "grey", lty = 2) 
-          #lines( (es$hill-es$biais), col = "darkblue", lty=1) 
+
+          #lines( (es$hill), col = "grey", lty = 2)
+          #lines( (es$hill-es$biais), col = "darkblue", lty=1)
           legend("topright", legend = c("Unbiased Hill", "Hill"), col =c("darkblue","grey"), lty=1 ,cex=0.7)
       }
       else{
@@ -125,10 +146,9 @@ alphaestimator  <- function(sample,k1=floor(n^(0.7)),plot=FALSE,R0=1,hill=FALSE,
     }
       return(data.frame("lbound"=IC1[1,k1] , "xi" = al, "ubound"=IC1[2,k1]))
   }
-  
+
   return( data.frame("xi"=al))
 }
-
 
 #######################################################################
 ## Auxiliar fct. for unbiased Hill estimator in De Haan - Mercadier - Zhou
@@ -145,12 +165,12 @@ Rka   <- function(k,v,lsortedpath,n){
   }
   names(res) <- v
   return(res)
-} 
+}
 Ska   <- function(k,a,lsortedpath,n){
   na <- length(a); v <- NULL
   for( i in 1:na) v <- c(v, c( (2*a[i]) ,(a[i]+1) ) )
   rk <- Rka(k,v,lsortedpath,n)
-  sk <- sapply(1:na , 
+  sk <- sapply(1:na ,
                function(i) ( a[i]*( (a[i]+1)^2 )*( (gamma(a[i]))^2 )*rk[(2*(i-1) +1)] )/( 4*gamma( (2*a[i]) )*( rk[(2*i)]^2 ) )   )
   names(sk) <- a
   return(sk)
@@ -184,8 +204,8 @@ rho_Estimate2 <- function(k,lsortedpath,n){
   }
   else return(NA)
 }
-gammaes2   <- function(lsorted,n,rho,k0=1:(n^0.9)){
-  if(is.na(rho)) rho <- 1         ## returns Hill estimator  
+gammaes2      <- function(lsorted,n,rho,k0=1:(n^0.9)){
+  if(is.na(rho)) rho <- 1         ## returns Hill estimator
   hill  <-    sapply( k0, function(k) Mka(k,1,lsorted,n))
   biais <-    sapply( 1:length(k0), function(k) ( ( Mka(k0[k],2,lsorted,n) - 2*( (hill[k])^2 ))*(1-rho)*(1/( 2*hill[k]*rho )) ))
   return( data.frame("hill" = hill, "biais" = biais)  )
