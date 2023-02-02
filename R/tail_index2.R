@@ -1,20 +1,5 @@
 #######################################################################
-#######################################################################
-#######################################################################
-#######################################################################
-#### Gloria Buriticá
-#### Index of regular variation
-#######################################################################
-#######################################################################
-#######################################################################
-#######################################################################
-#######################################################################
-## Main functions:
-##      - alphaestimator2: results from fExtreme code.
-##      - alphaestimator:
-
-#######################################################################
-## alphaestimator2
+#' alphaestimator2
 #' @description
 #'  This function computes the (tail)-index.
 #'  It returns the mean estimate from the Pickands, Hill and DeHaan estimators
@@ -36,14 +21,11 @@ alphaestimator2 <- function(path0){
   return(alpha)
 }
 #######################################################################
-## alphaestimator
+#' alphaestimator
 #' @description
 #' This function computes the (tail)-index as a function of k
 #' It returns the unbiased Hill estimator from de Haan et al. with tuning parameter rho = 2
-## Parameters:
-##        sample -> path of nonnegative entries : no NA.
-##        k1     -> order statistics to consider.
-#' Title
+#'
 #'
 #' @param sample (Vector of nonnegative univariate entries)
 #' @param k1 (Integer indicating the number of high order statistics to consider for inference)
@@ -116,9 +98,9 @@ alphaestimator  <- function(sample,k1=floor(n^(0.7)),plot=FALSE,R0=100,hill=FALS
     es   <- rbind(es,gammaes2(lsorted, n,rhohat, (floor(n^ind[j-1])+1):k1 ))
     ##################
     ################## Bootstrap
-    b          <-  tsboot(sample,statistic=stathill, R=R0, sim = "geom", l = 200 )
-    IC1        <-  sapply(1:length(es$hill) , function(l)  boot.ci(b,  type = "perc", index = l )$percent[4:5] )
-    IC2        <-  sapply(1:length(es$hill) , function(l)  boot.ci(b,  type = "perc", index = (length(es$hill) + l)  )$percent[4:5] )
+    b          <-  boot::tsboot(sample,statistic=stathill, R=R0, sim = "geom", l = 200 )
+    IC1        <-  sapply(1:length(es$hill) , function(l)  boot::boot.ci(b,  type = "perc", index = l )$percent[4:5] )
+    IC2        <-  sapply(1:length(es$hill) , function(l)  boot::boot.ci(b,  type = "perc", index = (length(es$hill) + l)  )$percent[4:5] )
     ################## Plots
     if(plot == TRUE){
       if(length(ylim0)==0) ylim0 <- c(min(IC1, IC2),max((IC1),IC2))
