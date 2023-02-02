@@ -1,5 +1,6 @@
 ---
 output: github_document
+bibliography: "references.bib"
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -18,7 +19,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The package tsExtremes aims to compile functions for assessing the time dependencies of extremes.
+The package tsExtremes gathers functions for assessing the time dependencies of extremes.
 
 ## Installation
 
@@ -30,3 +31,14 @@ You can install the package from github using
 devtools::install_github('GBuritica/tsExtremes')
 ```
 
+# R Package tutorial
+
+
+The outline of this tutorial is as follows:
+
+1. Tail index inference
+    - In this vignette we demonstrate how to obtain unbiased estimates of the tail index alpha of the series. We use the recipricate of Hill-type estimators in [@dehaan:mercadier:zhou:2016]
+2. Cluster inference 
+    - In this window we show how to compute the cluster process based estimates in [@buritica:meyer:mikosch:wintenberger:2021] for classical cluster statics. We consider the example of inference of the extremal index with the alpha cluster process [@buritica:mikosch:wintenberger:2021], and also an example of the cluster lengths.
+
+## References
