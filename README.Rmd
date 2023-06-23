@@ -30,7 +30,7 @@ For example, you can use it compute estimates of:
 
 -   the cluster lengths of the time series.
 
-## Installation
+# Installation
 
 <!-- You can install the released version of tsExtremes from [CRAN](https://CRAN.R-project.org) with: -->
 
