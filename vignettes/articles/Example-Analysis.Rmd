@@ -82,6 +82,6 @@ h <- hillestimator(rainfall$BREST[rainfall$SEASON=="SPRING"], plot=T)
 
 An unbiased Hill estimator can be obtained running the lines below. 
 
-```{r unbiased hill, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
+```{r unbiased-hill, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
 h <- alphaestimator(rainfall$BREST[rainfall$SEASON=="SPRING"], plot=TRUE , R0 = 100,  hill=T ,  k1 = 300 )
 ```
