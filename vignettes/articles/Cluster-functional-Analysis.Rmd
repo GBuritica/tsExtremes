@@ -32,7 +32,6 @@ ks           <-  estimate$k
 
 Notice that this method also computes estimates for the asymptotic variance which we can use to draw the confidence intervals. The red line corresponds to the true value.
 
-
 ```{r plot cluster, echo = F, fig.height = 4, fig.width = 9, fig.align = "center"}
 plot(ks, estimate$estimate$Theta,type = "l", xlim = c(2,100) , ylim = c(0,1),  xlab = "k", ylab ="Estimate")
 lines(ks,estimate$estimate$Theta
@@ -42,7 +41,9 @@ lines(ks, estimate$estimate$Theta
 points(ks,estimate$estimate$Theta, pch = 16, cex = 0.5)
 abline(h=theta, col = 'red', lty = 2)
 ```
-Similarly, we can produce this plots with the option plot=T. The dashed line in blue gives the estimate for k = 10. 
+
+Similarly, we can produce this plots with the option plot=T. The dashed line in blue gives the estimate for k = 10.
+
 ```{r plot cluster 2, echo = T, fig.height = 8, fig.width = 9, fig.align = "center"}
 estimate     <-  piCP(path,alphae,plot=T) 
 ```
@@ -54,4 +55,3 @@ path         <- rainfall$BREST[rainfall$SEASON=="SPRING"]
 alphae       <- 1/alphaestimator(path,k1=150)$xi 
 estimate     <- piCP(path,alphae,plot=T) 
 ```
-
