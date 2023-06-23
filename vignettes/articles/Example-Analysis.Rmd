@@ -1,6 +1,7 @@
 ---
 title: "Tail index inference"
 author: Gloria Buriticá
+geometry: margin=3cm
 ---
 
 <style>
@@ -75,6 +76,6 @@ The $\texttt{tsExtremes}$ package includes the rainfall dataset, containing dail
 
 
 
-```{r unbiased-hill, echo=T, fig.align = 'center'}
-h <- alphaestimator(rainfall$BREST[rainfall$SEASON=="SPRING"], plot=TRUE , R0 = 100,  hill=T ,  k1 = 300 )
+```{r unbiased-hill, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
+h <- alphaestimator(rainfall$BREST[rainfall$SEASON=="SPRING"], plot=F , R0 = 100,  hill=T ,  k1 = 300 )
 ```
