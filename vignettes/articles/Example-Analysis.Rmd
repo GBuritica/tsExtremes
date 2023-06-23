@@ -9,9 +9,17 @@ knitr::opts_chunk$set(
 )
 ```
 
+This tutorial reviews statistical methods from extreme value theory for risk assessment. 
+Quantifying risk is crucial in numerous engineering, econometric or climate science applications to prevent the societal, economic and environmental consequences of hazards.
+For example, hydrologists carefully analyse extreme precipitation periods because these can lead to flooding or land sliding, and for this reason, their reports are essential for policymakers. 
+For example, to determine the largest daily precipitation amounts that will be recorded in the next 20 years we can use the tools is extreme value theory. 
+
+
+First, we start by loading the package. 
 ```{r setup}
 library(tsExtremes)
 ```
+
 
 
 ## Hill estimation
