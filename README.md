@@ -6,14 +6,22 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The package tsExtremes gathers functions for assessing the time
-dependencies of extremes.
+The package tsExtremes gathers functions for analyzing the extremes of
+stationary time series and assessing the time dependencies of extremes.
 
-## Installation
+For example, you can use it compute estimates of:
+
+- the tail index of the series,
+
+- the extremal index of a time series,
+
+- the cluster lengths of the time series.
+
+# Installation
 
 <!-- You can install the released version of tsExtremes from [CRAN](https://CRAN.R-project.org) with: -->
 
-You can install the package from github using
+To get started, install the package from Github using the command:
 
 ``` r
 devtools::install_github('GBuritica/tsExtremes')
@@ -24,15 +32,15 @@ devtools::install_github('GBuritica/tsExtremes')
 The outline of this tutorial is as follows:
 
 1.  Tail index inference
-    - In this vignette we demonstrate how to obtain unbiased estimates
-      of the tail index alpha of the series. We use the reciprocate of
-      Hill-type estimators in (Haan, Mercadier, and Zhou 2016).
+    - In this vignette you can learn how to compute unbiased estimates
+      of the tail index alpha of the series. The implementation is based
+      on the Hill-type estimators in (Haan, Mercadier, and Zhou 2016).
 2.  Cluster inference
-    - In this window, we show how to compute the cluster process based
-      estimates in (Buriticá et al. 2021) for classical cluster statics.
-      We consider the example of inference of the extremal index with
-      the alpha cluster process (Buriticá, Mikosch, and Wintenberger
-      2022), and also an example of the cluster lengths.
+    - In this window you will learn how to compute the cluster process
+      based estimates in (Buriticá et al. 2021) for classical cluster
+      statics. We consider the example of inference of the extremal
+      index with the alpha cluster process (Buriticá, Mikosch, and
+      Wintenberger 2022), and also an example of the cluster lengths.
 
 ## References
 
@@ -41,7 +49,7 @@ The outline of this tutorial is as follows:
 <div id="ref-buritica:meyer:mikosch:wintenberger:2021"
 class="csl-entry">
 
-G. Buriticá, N. Meyer, T. Mikosch, and O. Wintenberger. 2021. “Some
+Buriticá, G., N. Meyer, T. Mikosch, and O. Wintenberger. 2021. “Some
 Variations on the Extremal Index.” *Zap. Nauchn. Semin. POMI.* 30:
 52–77.
 
@@ -49,7 +57,7 @@ Variations on the Extremal Index.” *Zap. Nauchn. Semin. POMI.* 30:
 
 <div id="ref-buritica:mikosch:wintenberger:2021" class="csl-entry">
 
-G. Buriticá, T. Mikosch, and O. Wintenberger. 2022. “Large Deviations
+Buriticá, G., T. Mikosch, and O. Wintenberger. 2022. “Large Deviations
 of Lp Blocks of Regularly Varyinig Time Series.”
 
 </div>
