@@ -79,6 +79,8 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Cluster inference</h1>
+                        <h4 data-toc-skip class="author">Gloria
+Buriticá</h4>
             
       
       <small class="dont-index">Source: <a href="https://github.com/GBuritica/tsExtremes/blob/HEAD/vignettes/articles/Cluster-functional-Analysis.Rmd" class="external-link"><code>vignettes/articles/Cluster-functional-Analysis.Rmd</code></a></small>
@@ -88,32 +90,124 @@
 
     
     
+<style>
+p.comment {
+background-color: #DCDCDC;
+padding: 10px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-style: italic;
+}
+
+</style>
+<p>In the vignette Tail index inference, you learnt how to estimate the
+tail-index of a distribution from a sample identically distributed
+random variables. We now focus on analyzing the time dependencies of our
+data. In this tutorial you will learn how to estimate the extremal index
+and further cluster statistics of the series.</p>
+<div class="section level3">
+<h3 id="extremal-index">Extremal index<a class="anchor" aria-label="anchor" href="#extremal-index"></a>
+</h3>
+<p>The extremal index is motivated by the findings in (Newell, 1964),
+(Leadbetter, 1983), and (Leadbetter <em>et al.</em>, 1983), who
+discovered that for numerous real-valued stationary sequences <span class="math inline">\((X_t)\)</span>, <span class="math display">\[
+Pr \left( \max_{t=1,\dots,n} |X_t| \le u_n \right) \; \approx \; \Big[
+Pr( X_1 \le u_n) \Big]^{n \theta_X} \; = \; Pr \left( \max_{t=1,\dots,n}
+|X^\prime_t| \le u_n \right)^{\theta_X}, \quad n \to \infty,
+\]</span> where <span class="math inline">\((X^\prime_t)\)</span> is a
+time series of iid variables distributed as <span class="math inline">\(X_1\)</span>, <span class="math inline">\(\theta_{X} \in [0,1]\)</span>, and <span class="math inline">\(u_n = u_n(\tau)\)</span> is a sequence of high
+thresholds such that <span class="math inline">\(n \, Pr(X_1 &gt; u_n)
+\to \tau\)</span>, and the previous relation holds for every <span class="math inline">\(\tau &gt; 0\)</span>. If such a constant <span class="math inline">\(\theta_{X}\)</span> exists, we say that the time
+series admits an <strong>extremal index</strong> given by <span class="math inline">\(\theta_X\)</span>.</p>
+<p>From the expression above, we see that the extremal index measures
+the shrinkage effect of the blocks of maxima compared to its behaviour
+in the iid setting. The reason for this shrinkage is that extremes
+records of numerous time series tend to cluster, and high records are
+likely to be followed by a period with several extreme values. To see
+how these time dependencies perturb the behavior of the series, consider
+the partition of the sample into <span class="math inline">\(m_n =
+\lfloor n/b_n \rfloor\)</span> disjoint blocks <span class="math display">\[
+\underbrace{X_1,\dots,X_{b_n}}_{\mathcal{B}_1},  \underbrace{X_{b_n+1},\dots,X_{2
+b_n}}_{\mathcal{B}_2}, \dots, \underbrace{X_{m_nb_n - b_n
++1},\dots,X_{m_n b_n}}_{\mathcal{B}_{m_n}},
+\]</span> Considering the maxima over each block consists in keeping the
+largest records and discarding the rest of the observations. However,
+when extremes cluster in short periods, these procedure will discard
+several high recordings. How many high records we loose by doing so, is
+measured by the extremal index. More precisely, the extremal index has
+an interpretation as be seen as the reciprocal of the number of high
+recordings in a block.</p>
+<div class="section level4">
+<h4 id="inference-of-the-extremal-index">Inference of the extremal index<a class="anchor" aria-label="anchor" href="#inference-of-the-extremal-index"></a>
+</h4>
+<p>The extremal index is essential to correct inference procedures in
+extreme value statistics initially tailored for iid observations. For
+example, it can be used to extrapolate high quantiles from the sample´s
+blocks of maxima. In the following, we will see how to infer the
+extremal index from sample observations. For this purpose, let <span class="math inline">\({\bf X}_1,\dots, {\bf X}_n\)</span> be
+observations with values in <span class="math inline">\(\mathbb{R}^d\)</span> from a stationary time
+series <span class="math inline">\(({\bf
+X}_t)_{t\in\mathbb{Z}}\)</span>. We focus on the case of heavy-tailed
+series admitting a tail-index <span class="math inline">\(\alpha &gt;
+0\)</span>. In this setting, (Buriticá <em>et al.</em>, 2021) introduced
+the extremal index cluster estimator given by</p>
+<p class="comment">
+<strong>Spectral cluster estimator</strong> of the extremal index: <span class="math display">\[
+\widehat \theta_{|{\bf X}|} = \frac{1}{k_n}   \sum_{t=1}^{m_n}
+\frac{\|\mathcal{B}_t\|^{\widehat\alpha}_\infty}{\|\mathcal{B}_t\|^{\widehat\alpha}_{\widehat\alpha}}1(\|\mathcal{B}_t\|_{\widehat\alpha}\ge
+\|\mathcal{B}_t\|_{\widehat\alpha,(k)}),
+\]</span> where <span class="math inline">\(\|\mathcal{B}_t\|_{\widehat\alpha,(1)} \ge
+\|\mathcal{B}_t\|_{\widehat\alpha,(2)} \ge \cdots \ge
+\|\mathcal{B}_t\|_{\widehat\alpha,(m_n)}\)</span> are order statistics
+of the <span class="math inline">\(\widehat\alpha-\)</span>norms of
+blocks, and <span class="math inline">\(\widehat \alpha\)</span> is an
+estimate for the tail index <span class="math inline">\(\alpha &gt;
+0\)</span>.
+</p>
+<p>The sequence <span class="math inline">\((k_n)\)</span> is a tuning
+parameter of the spectral cluster estimator. It must be chose to be a
+small proportion of the total amount of blocks <span class="math inline">\(m_n = \lfloor n/b_n \rfloor\)</span>, such that
+<span class="math inline">\(m_n/k_n \to \infty\)</span>. In this way,
+inference is based solely on the extremal blocks.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="implementation">Implementation<a class="anchor" aria-label="anchor" href="#implementation"></a>
+</h3>
+<p>We start by loading the <span class="math inline">\(\texttt{tsExtremes}\)</span> package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GBuritica/tsExtremes" class="external-link">tsExtremes</a></span><span class="op">)</span></span></code></pre></div>
-<div class="section level2">
-<h2 id="cluster-inference">Cluster inference<a class="anchor" aria-label="anchor" href="#cluster-inference"></a>
-</h2>
-<p>The tsExtremes allows to sample from classical time series models,
-estimate the tail index of regular variation, and compute cluster
-statistics. First, let’s start by simulations a time series and
-computing its tail index.</p>
+<p>To implement the spectral cluster estimator, we first start by
+computing and estimate of the tail-index of the series. For stationary
+time series with short-range dependence, the Hill-type estimators still
+yield good results in general. The <span class="math inline">\(\texttt{tsExtremes}\)</span> package also allows
+to sample from classical time series models, and to estimate the cluster
+lengths. The following chunk simulates from the solution to the
+stochastic recurrence equation <span class="math display">\[
+X_t = A_t X_{t-1} + B_t, \quad t \in \mathbb{Z},
+\]</span> with <span class="math inline">\(\log A_t \sim N_t -
+0.5\)</span>, <span class="math inline">\(B_t ~ Unif(0,1)\)</span>,
+<span class="math inline">\(N_t \sim \mathcal{N}(0,1)\)</span> and <span class="math inline">\((A_t), (B_t)\)</span> are independent iid
+sequences. In this case <span class="math inline">\(\alpha = 1\)</span>
+and <span class="math inline">\(\theta_X \approx 0.2792\)</span>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">path</span>         <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ARCHm.html">ARCHm</a></span><span class="op">(</span><span class="fl">20000</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">path</span>         <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ARCHm.html">ARCHm</a></span><span class="op">(</span><span class="fl">8000</span><span class="op">)</span></span>
 <span><span class="va">alphae</span>       <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fu"><a href="../reference/alphaestimator.html">alphaestimator</a></span><span class="op">(</span><span class="va">path</span>,k1<span class="op">=</span><span class="fl">1200</span><span class="op">)</span><span class="op">$</span><span class="va">xi</span> </span>
 <span><span class="va">theta</span>        <span class="op">&lt;-</span> <span class="fl">0.2792</span></span></code></pre></div>
-<p>With the values that we computed, we are now ready to infer classical
-cluster statistics. For example, the extremal index of the series and
-the cluster lengths. The functions piCP computes estimates for this
-quantities as a function of k.</p>
+<p>The functions piCP computes estimates of the extremal index, as well
+as estimates of cluster lengths, as a function of k.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">estimate</span>     <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/piCP.html">piCP</a></span><span class="op">(</span><span class="va">path</span>,<span class="va">alphae</span><span class="op">)</span> </span>
 <span><span class="va">ks</span>           <span class="op">&lt;-</span>  <span class="va">estimate</span><span class="op">$</span><span class="va">k</span></span></code></pre></div>
 <p>Notice that this method also computes estimates for the asymptotic
-variance which we can use to draw the confidence intervals. The red line
-corresponds to the true value.</p>
-<p><img src="Cluster-functional-Analysis_files/figure-html/plot%20cluster-1.png" width="864" style="display: block; margin: auto;">
-Similarly, we can produce this plots with the option plot=T. The dashed
-line in blue gives the estimate for k = 10.</p>
+variance relying on (Buriticá and Wintenberger, 2022), which we use to
+draw the confidence intervals. The red line corresponds to the true
+value.</p>
+<p><img src="Cluster-functional-Analysis_files/figure-html/plot%20cluster-1.png" width="864" style="display: block; margin: auto;"></p>
+<p>Similarly, we can produce this plots with the option plot=T. The
+dashed line in blue gives the estimate for k = 10.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">estimate</span>     <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/piCP.html">piCP</a></span><span class="op">(</span><span class="va">path</span>,<span class="va">alphae</span>,plot<span class="op">=</span><span class="cn">T</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="Cluster-functional-Analysis_files/figure-html/plot%20cluster%202-1.png" width="864" style="display: block; margin: auto;"></p>
@@ -129,9 +223,7 @@ index analysis. We can now apply our method to this data set.</p>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 
