@@ -75,6 +75,7 @@ library(tsExtremes)
 The $\texttt{tsExtremes}$ package includes the rainfall dataset, containing daily rainfall records from nine different weather stations in France. The data and season of each record is available. To compute the tail-index and produce a Hill Plot of summer rainfall in Brest we use the function below.
 
 ```{r hill, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
+set.seed(123)
 h <- hillestimator(rainfall$BREST[rainfall$SEASON=="SPRING"], plot=T)
 ```
 
