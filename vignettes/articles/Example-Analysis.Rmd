@@ -1,6 +1,20 @@
 ---
 title: "Tail index inference"
+author: Gloria Buriticá
+geometry: margin=3cm
 ---
+
+<style>
+p.comment {
+background-color: #DCDCDC;
+padding: 10px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-style: italic;
+}
+
+</style>
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -9,24 +23,64 @@ knitr::opts_chunk$set(
 )
 ```
 
-This tutorial reviews statistical methods from extreme value theory for risk assessment. 
-Quantifying risk is crucial in numerous engineering, econometric or climate science applications to prevent the societal, economic and environmental consequences of hazards.
-For example, hydrologists carefully analyse extreme precipitation periods because these can lead to flooding or land sliding, and for this reason, their reports are essential for policymakers. 
-For example, to determine the largest daily precipitation amounts that will be recorded in the next 20 years we can use the tools is extreme value theory. 
+This tutorial reviews statistical methods from extreme value theory for risk assessment. Quantifying risk is crucial in numerous engineering, econometric or climate science applications to prevent the societal, economic and environmental consequences of hazards. For example, hydrologists carefully analyse extreme precipitation periods because these can lead to flooding or land sliding, and for this reason, their reports are essential for policymakers. Daily precipitation amounts have been collected systematically in Europe only since the late last century. Therefore, to determine the maximum of daily rain that will be recorded in the next 30 years we propose to use the tools is extreme value theory.
+
+#### Fisher-Tipett-Gnedenko Theorem
+
+Let's say that we sample $X_1, \dots, X_n$, independent and identically distributed (iid) values from a univariate distribution $F$.
+
+<p class="comment">
+**Theorem.** (Fisher-Tipett-Gnedenko)
+Assume there exists renormalizing constants $a_n>0,b_n \in \mathbb{R}$ and a non-degenerate distribution $G{\gamma}$ such that
+$$
+\lim_{n \to + \infty}
+Pr \left( \max_{t=1,\dots,n} X_t \le  x\,a_n + b_n\right) \;=\; G(x), \quad x \in \mathbb{R},
+$$
+then G belongs to the family of generalized extreme value distributions and
+$$
+ G(x)\;= \; G_{\gamma}(x; \mu, \sigma) \; =\; \exp\{ - (1+ \gamma\tfrac{(x-\mu)}{\sigma})_{+}^{-1/\gamma}\},  \quad x \in \mathbb{R}.
+$$
+for $\mu \in \mathbb{R}$, $\sigma > 0$ and $\gamma \in \mathbb{R}$ such as for $\gamma = 0$ we read the above expression as the limit as $\gamma$ approaches zero. In this case we say that $F$ belong to the **maximum domain of attraction** of $G_{\gamma}$.
+</p>
+
+We refer to the quantity $1/\gamma$ as the **tail-index** of the distribution $F$. In the case where $\gamma > 0$, we say the distribution $F$ is **heavy-tailed**. 
+Moreover, we can fully characterize the latter maximum domain of attraction with the 
 
 
-First, we start by loading the package. 
+<p class="comment">
+**Theorem.** The distribution $F$ is in the maximum domain of attraction of $G=G_{\gamma}$, whith $\gamma > 0$, if and only if the survival function $\bar{F} : x \mapsto Pr(X_1 > x)$ is regularly varying of index $\alpha = 1/\gamma$, i.e., for all $t > 0$,
+$$
+\lim_{x \to +\infty} \frac{\bar{F}(tx)}{\bar{F}(x)}
+$$
+and one can choose $b_n = 0$ and $(a_n)$ verifying $n\, Pr(X_1 > a_n) \to 1$ as $n \to \infty$. We refer to $\alpha$ as the **tail-index**.
+</p>
+
+Some examples of heavy-tailed distributions are the Pareto, the t-student, the Burr or the Fréchet distribution. 
+
+
+
+
+
+### Estimation of the tail-index
+
+In what follows, we review how to estimate the tail-index from a sample $X_1, \dots, X_n$ of iid observations using the Hill-type estimators. 
+For stationary time series with short-range dependence, these estimators still yield good results in general. 
+First, we start by loading the $\texttt{tsExtremes}$ package.
+
 ```{r setup}
 library(tsExtremes)
 ```
 
 
-
-## Hill estimation
-
-To get started with the tsExtremes package, we have included a data set of Precipitations. The rainfall variable contains daily rainfall records from nine different weather stations in France. The data and season of each record is available. To compute the (tail) index Hill Plot of summer rainfall in Brest we use the function below.
+The $\texttt{tsExtremes}$ package includes the rainfall dataset, containing daily rainfall records from nine different weather stations in France. The data and season of each record is available. To compute the tail-index and produce a Hill Plot of summer rainfall in Brest we use the function below.
 
 ```{r hill, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
 h <- hillestimator(rainfall$BREST[rainfall$SEASON=="SPRING"], plot=T)
+```
+
+
+An unbiased Hill estimator can be obtained running the lines below. 
+
+```{r unbiased hill, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
 h <- alphaestimator(rainfall$BREST[rainfall$SEASON=="SPRING"], plot=TRUE , R0 = 100,  hill=T ,  k1 = 300 )
 ```
