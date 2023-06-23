@@ -1,6 +1,21 @@
 ---
 title: "Cluster inference"
+author: Gloria Buriticá
+geometry: margin=3cm
 ---
+
+
+<style>
+p.comment {
+background-color: #DCDCDC;
+padding: 10px;
+border: 1px solid black;
+margin-left: 25px;
+border-radius: 5px;
+font-style: italic;
+}
+
+</style>
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -9,28 +24,87 @@ knitr::opts_chunk$set(
 )
 ```
 
+In the vignette Tail index inference, you learnt how to estimate the tail-index of a distribution from a sample identically distributed random variables.
+We now focus on analyzing the time dependencies of our data.
+In this tutorial you will learn how to estimate the extremal index and further cluster statistics of the series.
+
+### Extremal index
+
+
+The extremal index is motivated by the findings in (Newell, 1964), (Leadbetter, 1983), and (Leadbetter *et al.*, 1983), who discovered that for numerous real-valued stationary sequences $(X_t)$, 
+$$
+Pr \left( \max_{t=1,\dots,n} |X_t| \le u_n \right) \; \approx \; \Big[ Pr( X_1 \le u_n) \Big]^{n \theta_X} \; = \; Pr \left( \max_{t=1,\dots,n} |X^\prime_t| \le u_n \right)^{\theta_X}, \quad n \to \infty,
+$$
+where $(X^\prime_t)$ is a time series of iid variables distributed as $X_1$, $\theta_{X} \in [0,1]$, and $u_n = u_n(\tau)$ is a sequence of high thresholds such that $n \, Pr(X_1 > u_n) \to \tau$, and the previous relation holds for every $\tau > 0$. If such a constant $\theta_{X}$ exists, we say that the time series admits an **extremal index** given by $\theta_X$. 
+
+From the expression above, we see that the extremal index measures the shrinkage effect of the blocks of maxima compared to its behaviour in the iid setting. 
+The reason for this shrinkage is that extremes records of numerous time series tend to cluster, and high records are likely to be followed by a period with several extreme values.
+To see how these time dependencies perturb the behavior of the series, consider the partition of the sample into $m_n = \lfloor n/b_n \rfloor$ disjoint blocks 
+$$
+ \underbrace{X_1,\dots,X_{b_n}}_{\mathcal{B}_1},  \underbrace{X_{b_n+1},\dots,X_{2 b_n}}_{\mathcal{B}_2}, \dots, \underbrace{X_{m_nb_n - b_n +1},\dots,X_{m_n b_n}}_{\mathcal{B}_{m_n}},
+$$
+Considering the maxima over each block consists in keeping the largest records and discarding the rest of the observations. 
+However, when extremes cluster in short periods, these procedure will discard several high recordings. 
+How many high records we loose by doing so, is measured by the extremal index. 
+More precisely, the extremal index has an interpretation as be seen as the reciprocal of the number of high recordings in a block. 
+
+
+#### Inference of the extremal index
+
+The extremal index is essential to correct inference procedures in extreme value statistics initially tailored for iid observations. 
+For example, it can be used to extrapolate high quantiles from the sample´s blocks of maxima. 
+In the following, we will see how to infer the extremal index from sample observations. 
+For this purpose, let ${\bf X}_1,\dots, {\bf X}_n$ be observations with values in $\mathbb{R}^d$ from a stationary time series $({\bf X}_t)_{t\in\mathbb{Z}}$. 
+We focus on the case of heavy-tailed series admitting a tail-index $\alpha > 0$. 
+In this setting, (Buriticá *et al.*, 2021) introduced the extremal index cluster estimator given by 
+
+
+<p class="comment">
+**Spectral cluster estimator** of the extremal index: 
+$$
+\widehat \theta_{|{\bf X}|} = \frac{1}{k_n}   \sum_{t=1}^{m_n} \frac{\|\mathcal{B}_t\|^{\widehat\alpha}_\infty}{\|\mathcal{B}_t\|^{\widehat\alpha}_{\widehat\alpha}}1(\|\mathcal{B}_t\|_{\widehat\alpha}\ge \|\mathcal{B}_t\|_{\widehat\alpha,(k)}),
+$$ 
+where $\|\mathcal{B}_t\|_{\widehat\alpha,(1)} \ge \|\mathcal{B}_t\|_{\widehat\alpha,(2)} \ge \cdots \ge \|\mathcal{B}_t\|_{\widehat\alpha,(m_n)}$ are order statistics of the $\widehat\alpha-$norms of blocks, and $\widehat \alpha$ is an estimate for the tail index $\alpha > 0$. 
+</p>
+The sequence $(k_n)$ is a tuning parameter of the spectral cluster estimator. 
+It must be chose to be a small proportion of the total amount of blocks $m_n = \lfloor n/b_n \rfloor$, such that $m_n/k_n \to \infty$. 
+In this way, inference is based solely on the extremal blocks.
+
+
+
+
+### Implementation
+
+We start by loading the $\texttt{tsExtremes}$ package.
+
 ```{r setup}
 library(tsExtremes)
 ```
 
-## Cluster inference
-
-The tsExtremes allows to sample from classical time series models, estimate the tail index of regular variation, and compute cluster statistics. First, let's start by simulations a time series and computing its tail index.
+To implement the spectral cluster estimator, we first start by computing and estimate of the tail-index of the series.
+For stationary time series with short-range dependence, the Hill-type estimators still yield good results in general. 
+The $\texttt{tsExtremes}$ package also allows to sample from classical time series models, and to estimate the cluster lengths. 
+The following chunk simulates from the solution to the stochastic recurrence equation
+$$
+ X_t = A_t X_{t-1} + B_t, \quad t \in \mathbb{Z},
+$$
+with $\log A_t \sim N_t - 0.5$, $B_t ~ Unif(0,1)$, $N_t \sim \mathcal{N}(0,1)$ and $(A_t), (B_t)$ are independent iid sequences. In this case $\alpha = 1$ and $\theta_X \approx 0.2792$. 
 
 ```{r time series, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
-path         <- ARCHm(20000)
+set.seed(123)
+path         <- ARCHm(8000)
 alphae       <- 1/alphaestimator(path,k1=1200)$xi 
 theta        <- 0.2792
 ```
 
-With the values that we computed, we are now ready to infer classical cluster statistics. For example, the extremal index of the series and the cluster lengths. The functions piCP computes estimates for this quantities as a function of k.
+The functions piCP computes estimates of the extremal index, as well as estimates of cluster lengths, as a function of k.
 
 ```{r cluster statistic, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
 estimate     <-  piCP(path,alphae) 
 ks           <-  estimate$k
 ```
 
-Notice that this method also computes estimates for the asymptotic variance which we can use to draw the confidence intervals. The red line corresponds to the true value.
+Notice that this method also computes estimates for the asymptotic variance relying on (Buriticá and Wintenberger, 2022), which we use to draw the confidence intervals. The red line corresponds to the true value.
 
 ```{r plot cluster, echo = F, fig.height = 4, fig.width = 9, fig.align = "center"}
 plot(ks, estimate$estimate$Theta,type = "l", xlim = c(2,100) , ylim = c(0,1),  xlab = "k", ylab ="Estimate")
