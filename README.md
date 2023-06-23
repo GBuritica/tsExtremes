@@ -25,10 +25,10 @@ The outline of this tutorial is as follows:
 
 1.  Tail index inference
     - In this vignette we demonstrate how to obtain unbiased estimates
-      of the tail index alpha of the series. We use the recipricate of
-      Hill-type estimators in (Haan, Mercadier, and Zhou 2016)
+      of the tail index alpha of the series. We use the reciprocate of
+      Hill-type estimators in (Haan, Mercadier, and Zhou 2016).
 2.  Cluster inference
-    - In this window we show how to compute the cluster process based
+    - In this window, we show how to compute the cluster process based
       estimates in (Buriticá et al. 2021) for classical cluster statics.
       We consider the example of inference of the extremal index with
       the alpha cluster process (Buriticá, Mikosch, and Wintenberger
