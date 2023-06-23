@@ -41,7 +41,7 @@ The outline of this tutorial is as follows:
 <div id="ref-buritica:meyer:mikosch:wintenberger:2021"
 class="csl-entry">
 
-Buriticá, G., N. Meyer, T. Mikosch, and O. Wintenberger. 2021. “Some
+G. Buriticá, N. Meyer, T. Mikosch, and O. Wintenberger. 2021. “Some
 Variations on the Extremal Index.” *Zap. Nauchn. Semin. POMI.* 30:
 52–77.
 
@@ -49,7 +49,7 @@ Variations on the Extremal Index.” *Zap. Nauchn. Semin. POMI.* 30:
 
 <div id="ref-buritica:mikosch:wintenberger:2021" class="csl-entry">
 
-Buriticá, G., T. Mikosch, and O. Wintenberger. 2022. “Large Deviations
+G. Buriticá, T. Mikosch, and O. Wintenberger. 2022. “Large Deviations
 of Lp Blocks of Regularly Varyinig Time Series.”
 
 </div>
