@@ -17,15 +17,24 @@ knitr::opts_chunk$set(
 # tsExtremes
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-The package tsExtremes gathers functions for assessing the time dependencies of extremes.
+The package tsExtremes gathers functions for analyzing the extremes of stationary time series and assessing the time dependencies of extremes.
+
+For example, you can use it compute estimates of:
+
+-   the tail index of the series,
+
+-   the extremal index of a time series,
+
+-   the cluster lengths of the time series.
 
 ## Installation
 
 <!-- You can install the released version of tsExtremes from [CRAN](https://CRAN.R-project.org) with: -->
 
-You can install the package from github using
+To get started, install the package from Github using the command:
 
 ``` r
 devtools::install_github('GBuritica/tsExtremes')
@@ -33,12 +42,11 @@ devtools::install_github('GBuritica/tsExtremes')
 
 # R Package tutorial
 
-
 The outline of this tutorial is as follows:
 
-1. Tail index inference
-    - In this vignette we demonstrate how to obtain unbiased estimates of the tail index alpha of the series. We use the recipricate of Hill-type estimators in [@dehaan:mercadier:zhou:2016]
-2. Cluster inference 
-    - In this window we show how to compute the cluster process based estimates in [@buritica:meyer:mikosch:wintenberger:2021] for classical cluster statics. We consider the example of inference of the extremal index with the alpha cluster process [@buritica:mikosch:wintenberger:2021], and also an example of the cluster lengths.
+1.  Tail index inference
+    -   In this vignette you can learn how to compute unbiased estimates of the tail index alpha of the series. The implementation is based on the Hill-type estimators in [@dehaan:mercadier:zhou:2016].
+2.  Cluster inference
+    -   In this window you will learn how to compute the cluster process based estimates in [@buritica:meyer:mikosch:wintenberger:2021] for classical cluster statics. We consider the example of inference of the extremal index with the alpha cluster process [@buritica:mikosch:wintenberger:2021], and also an example of the cluster lengths.
 
 ## References
