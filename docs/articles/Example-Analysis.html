@@ -171,7 +171,8 @@ nine different weather stations in France. The data and season of each
 record is available. To compute the tail-index and produce a Hill Plot
 of summer rainfall in Brest we use the function below.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hillestimator.html">hillestimator</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">$</span><span class="va">BREST</span><span class="op">[</span><span class="va">rainfall</span><span class="op">$</span><span class="va">SEASON</span><span class="op">==</span><span class="st">"SPRING"</span><span class="op">]</span>, plot<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hillestimator.html">hillestimator</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">$</span><span class="va">BREST</span><span class="op">[</span><span class="va">rainfall</span><span class="op">$</span><span class="va">SEASON</span><span class="op">==</span><span class="st">"SPRING"</span><span class="op">]</span>, plot<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Example-Analysis_files/figure-html/hill-1.png" width="864" style="display: block; margin: auto;"></p>
 <p>An unbiased Hill estimator can be obtained running the lines
 below.</p>
