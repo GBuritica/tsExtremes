@@ -10,7 +10,8 @@ Authors@R:
            comment = c(ORCID = "0000-0001-8527-1165"))
 Description: Tools for the analysis of univariate and multivariate extremes of time series.
 BugReports: https://github.com/GBuritica/tsExtremes/issues/
-URL: https://github.com/GBuritica/tsExtremes
+URL: https://github.com/GBuritica/tsExtremes,
+    https://gburitica.github.io/tsExtremes/
 License: MIT + file LICENSE
 Depends: 
     R (>= 2.10)
