@@ -1,0 +1,12 @@
+To configure : https://pkgdown.r-lib.org/articles/pkgdown.html
+Protocol : open package, run build_site(), commit changes.
+
+
+Todo : 
+Update references
+Ref Pickands Balkema
+Ref moments of heavy-tails 
+
+
+
+
