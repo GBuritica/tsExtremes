@@ -1,6 +1,8 @@
 title: tsExtremes
 url: https://gburitica.github.io/tsExtremes/
 template:
-  params:
-    bootswatch: 5
+  bootstrap: 5
+  bootswatch: lux
+  bslib:
+    pkgdown-nav-height: 100px
     ganalytics: G-03X4DCM0HF
