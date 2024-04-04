@@ -1,11 +1,13 @@
 url: https://gburitica.github.io/tsExtremes/
 template:
   bootstrap: 5
-  theme: arrow-dark
   bslib:
     base_font: {google: "Roboto"}
     heading_font: {google: "Roboto Slab"}
     code_font: {google: "JetBrains Mono"}
-    code-bg: "#2b2b2b"
   navbar:
      bg: primary
+     type: light
+  home:
+    sidebar:
+    structure: [links, license, community, citation, authors, dev]
