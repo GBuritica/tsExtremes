@@ -159,8 +159,9 @@ infinite and for <span class="math inline">\(\alpha \in (0,1)\)</span>
 its mean is infinite. In other words, small values of <span class="math inline">\(\alpha\)</span> indicate heavier tails than larger
 values of <span class="math inline">\(\alpha\)</span>. For these
 reasons, estimating the tail-index of a random variable <span class="math inline">\(X\)</span> is important to quantify the magnitude
-of rare events. For a complete discussion on regularly varying
-distributions we refer to <span class="citation">[@embrechts:kluppelberg:mikosch:2013]</span>.</p>
+of rare events. For a full overview on regularly varying distributions
+we refer to <span class="citation">(Bingham, Goldie, and Teugels
+1987)</span>.</p>
 </div>
 <div class="section level3">
 <h3 id="inference-of-the-tail-index">Inference of the tail-index<a class="anchor" aria-label="anchor" href="#inference-of-the-tail-index"></a>
@@ -181,13 +182,20 @@ it is given by <span class="math display">\[
 Hill estimator. Actually, if <span class="math inline">\(X\)</span>
 follows the Pareto distribution with tail index <span class="math inline">\(\alpha\)</span> then <span class="math inline">\(F(t) = 1 -x^{-\alpha}\)</span>, and the
 strightforward calculations imply <span class="math inline">\(E[\log(X)]
-= 1/\alpha\)</span>. In all generality, the largest records of the
-sample follow asymptotically a Pareto distribution by means of the
-Pickands-Balkdema de Haan Theorem also called ‘Peaks over Thresholds’
-Theorem. This means, that if we restrict our sample to the <span class="math inline">\(k^\prime\)</span> largest records, then we see how
-the Hill estimator is a good candidate to estimate tail-index. We refer
-in all generality to Chapter 4 in <span class="citation">[@beirlant:goegebeur:teugels:segers:dewaal:ferro:2004]</span></p>
-<p>To implement the Hill estimator, we start by loading the <span class="math inline">\(\texttt{tsExtremes}\)</span> package.</p>
+= 1/\alpha\)</span>. In all generality, the renormalized largest records
+of the sample follow asymptotically a Pareto distribution by means of
+the Pickands-Balkdema de Haan Theorem also called ‘Peaks over
+Thresholds’ Theorem. This means, that if we restrict our sample to the
+<span class="math inline">\(k^\prime\)</span> largest records, then we
+see how the Hill estimator is a good candidate to estimate tail-index.
+We refer in all generality to Chapter 4 in <span class="citation">(Beirlant et al. 2004)</span>.</p>
+</div>
+<div class="section level3">
+<h3 id="tsextremes-package-implementation">tsExtremes package implementation<a class="anchor" aria-label="anchor" href="#tsextremes-package-implementation"></a>
+</h3>
+<p>To implement the Hill estimator with the tsExtremes package, we start
+by loading the <span class="math inline">\(\texttt{tsExtremes}\)</span>
+package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GBuritica/tsExtremes" class="external-link">tsExtremes</a></span><span class="op">)</span></span></code></pre></div>
 <p>The <span class="math inline">\(\texttt{tsExtremes}\)</span> package
@@ -197,6 +205,21 @@ record is available. To compute the tail-index and produce a Hill Plot
 of summer rainfall in Brest we use the function below.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/alphaestimator.html">alphaestimator</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">$</span><span class="va">BREST</span><span class="op">[</span><span class="va">rainfall</span><span class="op">$</span><span class="va">SEASON</span><span class="op">==</span><span class="st">"SPRING"</span><span class="op">]</span>, plot<span class="op">=</span><span class="cn">F</span> , R0 <span class="op">=</span> <span class="fl">100</span>,  hill<span class="op">=</span><span class="cn">T</span> ,  k1 <span class="op">=</span> <span class="fl">300</span> <span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-beirlant:goegebeur:teugels:segers:dewaal:ferro:2004" class="csl-entry">
+Beirlant, J., Y. Goegebeur, J. Teugels, J. Segers, D. de Waal, and Ferro
+C. 2004. <em>Statistics of Extremes: Theory and Applications</em>. West
+Sussex: John Wiley &amp; Sons.
+</div>
+<div id="ref-bingham:goldie:teugels:1987" class="csl-entry">
+Bingham, N. H., C. M. Goldie, and J. L. Teugels. 1987. <em>Regular
+Variation</em>. Cambridge: Cambridge University Press.
+</div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
