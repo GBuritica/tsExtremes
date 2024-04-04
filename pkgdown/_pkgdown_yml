@@ -2,5 +2,5 @@ title: tsExtremes
 url: https://gburitica.github.io/tsExtremes/
 template:
   params:
-    bootswatch: flatly
+    bootswatch: 5
     ganalytics: G-03X4DCM0HF
