@@ -2,17 +2,20 @@
 title: "Tail index inference"
 author: Gloria Buriticá
 geometry: margin=3cm
+bibliography: "/Users/Buritica/Dropbox/These/git/tsExtremes/references.bib"
 ---
 
 <style>
-p.comment {
-background-color: #DCDCDC;
+p.comment{
+background-color: #E3E7F1;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
 border-radius: 5px;
 font-style: italic;
 }
+
+
 
 </style>
 
@@ -23,49 +26,52 @@ knitr::opts_chunk$set(
 )
 ```
 
-This tutorial reviews statistical methods from extreme value theory for risk assessment. Quantifying risk is crucial in numerous engineering, econometric or climate science applications to prevent the societal, economic and environmental consequences of hazards. For example, hydrologists carefully analyse extreme precipitation periods because these can lead to flooding or land sliding, and for this reason, their reports are essential for policymakers. Daily precipitation amounts have been collected systematically in Europe only since the late last century. Therefore, to determine the maximum of daily rain that will be recorded in the next 30 years we propose to use the tools is extreme value theory.
+### Main goals of this tutorial
+  1. Review heavy-tailed random variables.
+  2. Compute estimates of the tail index.
 
-#### Fisher-Tipett-Gnedenko Theorem
 
-Let's say that we sample $X_1, \dots, X_n$, independent and identically distributed (iid) values from a univariate distribution $F$.
+The tail index $\alpha > 0$ of a heavy-tailed random variable $X$ is associated with the magnitude of rare event. 
+If $\alpha$ is small, high records are more likely to happen than if $\alpha$ is large.  
 
+
+### Heavy-tailed random variables
+
+In our setting, a real-valued random variable $X$ is heavy-tailed when its tail distribution has a polynomial decay. To state this condition formally, we will need the notion of regular variation. 
 <p class="comment">
-**Theorem.** (Fisher-Tipett-Gnedenko)
-Assume there exists renormalizing constants $a_n>0,b_n \in \mathbb{R}$ and a non-degenerate distribution $G{\gamma}$ such that
+**Definition.** (Regular variation)
+A real valued random variable $X$ with distribution $F$ is regularly varying with **tail-index** $\alpha > 0$ if $\lim_{t \to \infty}\bar F(tx)/\bar F(t) = x^{-\alpha},$ where $\bar F(t) := 1- F(t)$ is the tail distribution.
+<p>
+
+In the following we call heavy-tailed variables those with regularly varying distributions. __Examples__ of heavy-tailed variables are the Pareto random variables, the Fréchet, the $t-$student, the Burr or the log Gamma distribution. 
+In comparison, light-tailed distributions include the exponential, the Weibull and the gaussian distribution. 
+For these light-tailed examples, its tail distributions decay at an exponential rate. 
+In practice this means that is very rare to record high levels sampling from them, and instead the values concentrate around the mean. 
+For heavy-tailed random variables, the variance and the mean can sometimes equal infinity as we see next.
+\par 
+As we already mentioned, the tail index of a heavy-tailed random variable plays an important role in determining the heaviness of tails. Moreover, if $X$ is non-negative and regularly varying with index $\alpha > 0$, then for $p > \alpha$, $E[X^p] = + \infty$, and for $p < \alpha$, $E[X^p] < + \infty$. 
+In particular this means that for $\alpha \in (0,2)$, the variance of the variable $X$ is infinite and for $\alpha \in (0,1)$ its mean is infinite. 
+In other words, small values of $\alpha$ indicate heavier tails than larger values of $\alpha$. 
+For these reasons, estimating the tail-index of a random variable $X$ is important to quantify the magnitude of rare events. 
+For a full overview on regularly varying distributions we refer to  [@bingham:goldie:teugels:1987].
+
+### Inference of the tail-index
+
+To estimate the tail-index, we consider a sample of observations $X_1, \dots, X_n$ with the same distribution of $X$, and not necessarily independent.
+For weakly dependent stationary time series, think for example we sample from an AR(1) model, or from an independent series. 
+In these case, the Hill estimator is a general procedure to estimate the tail-index of $X$, and it is given by 
 $$
-\lim_{n \to + \infty}
-Pr \left( \max_{t=1,\dots,n} X_t \le  x\,a_n + b_n\right) \;=\; G(x), \quad x \in \mathbb{R},
+\frac{1}{\widehat{\alpha}^n} \;  := \;  \frac{1}{\widehat{\alpha}^n(k^\prime)}  := \frac{1}{k^\prime} \, \sum_{t=1}^{n} \log(X_t/X_{(k^\prime+1)})1(X_t > X_{(k^\prime +1)}),
 $$
-then G belongs to the family of generalized extreme value distributions and
-$$
- G(x)\;= \; G_{\gamma}(x; \mu, \sigma) \; =\; \exp\{ - (1+ \gamma\tfrac{(x-\mu)}{\sigma})_{+}^{-1/\gamma}\},  \quad x \in \mathbb{R}.
-$$
-for $\mu \in \mathbb{R}$, $\sigma > 0$ and $\gamma \in \mathbb{R}$ such as for $\gamma = 0$ we read the above expression as the limit as $\gamma$ approaches zero. In this case we say that $F$ belong to the **maximum domain of attraction** of $G_{\gamma}$.
-</p>
+where $X_{(1)} \geq X_{(2)} \geq \dots \geq  X_{(n)}$ are the sorted sample records, and $k^\prime$ is a tuning parameter for the Hill estimator.
+Actually, if $X$ follows the Pareto distribution with tail index $\alpha$ then $F(t) = 1 -x^{-\alpha}$, and the strightforward calculations imply  $E[\log(X)] = 1/\alpha$. 
+In all generality, the renormalized largest records of the sample follow asymptotically a Pareto distribution by means of the Pickands-Balkdema de Haan Theorem also called 'Peaks over Thresholds' Theorem. 
+This means, that if we restrict our sample to the $k^\prime$ largest records, then we see how the Hill estimator is a good candidate to estimate tail-index.
+We refer in all generality to Chapter 4 in [@beirlant:goegebeur:teugels:segers:dewaal:ferro:2004].
 
-We refer to the quantity $1/\gamma$ as the **tail-index** of the distribution $F$. In the case where $\gamma > 0$, we say the distribution $F$ is **heavy-tailed**. 
-Moreover, we can fully characterize the latter maximum domain of attraction with the 
-
-
-<p class="comment">
-**Theorem.** The distribution $F$ is in the maximum domain of attraction of $G=G_{\gamma}$, whith $\gamma > 0$, if and only if the survival function $\bar{F} : x \mapsto Pr(X_1 > x)$ is regularly varying of index $\alpha = 1/\gamma$, i.e., for all $t > 0$,
-$$
-\lim_{x \to +\infty} \frac{\bar{F}(tx)}{\bar{F}(x)}
-$$
-and one can choose $b_n = 0$ and $(a_n)$ verifying $n\, Pr(X_1 > a_n) \to 1$ as $n \to \infty$. We refer to $\alpha$ as the **tail-index**.
-</p>
-
-Some examples of heavy-tailed distributions are the Pareto, the t-student, the Burr or the Fréchet distribution. 
-
-
-
-
-
-### Estimation of the tail-index
-
-In what follows, we review how to estimate the tail-index from a sample $X_1, \dots, X_n$ of iid observations using the Hill-type estimators. 
-For stationary time series with short-range dependence, these estimators still yield good results in general. 
-First, we start by loading the $\texttt{tsExtremes}$ package.
+### tsExtremes package implementation
+\par 
+To implement the Hill estimator with the tsExtremes package,  we start by loading the $\texttt{tsExtremes}$ package.
 
 ```{r setup}
 library(tsExtremes)
@@ -79,3 +85,6 @@ The $\texttt{tsExtremes}$ package includes the rainfall dataset, containing dail
 ```{r unbiased-hill, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
 h <- alphaestimator(rainfall$BREST[rainfall$SEASON=="SPRING"], plot=F , R0 = 100,  hill=T ,  k1 = 300 )
 ```
+
+
+## References
