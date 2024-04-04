@@ -1,57 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/articles/Cluster-functional-Analysis.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/articles/Cluster-functional-Analysis.html</loc>
   </url>
   <url>
-    <loc>/articles/Example-Analysis.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/articles/Example-Analysis.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/articles/index.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/articles/tsExtremes.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/authors.html</loc>
   </url>
   <url>
-    <loc>/reference/ARCH2m.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/index.html</loc>
   </url>
   <url>
-    <loc>/reference/ARCHm.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/ARm.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/reference/ARCH2m.html</loc>
   </url>
   <url>
-    <loc>/reference/alphaestimator.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/reference/ARCHm.html</loc>
   </url>
   <url>
-    <loc>/reference/alphaestimator2.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/reference/ARm.html</loc>
   </url>
   <url>
-    <loc>/reference/eiCP.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/reference/alphaestimator.html</loc>
   </url>
   <url>
-    <loc>/reference/functionalCP.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/reference/alphaestimator2.html</loc>
   </url>
   <url>
-    <loc>/reference/hillestimator.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/reference/eiCP.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/reference/functionalCP.html</loc>
   </url>
   <url>
-    <loc>/reference/piCP.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/reference/hillestimator.html</loc>
   </url>
   <url>
-    <loc>/reference/rainfall.html</loc>
+    <loc>https://gburitica.github.io/tsExtremes/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://gburitica.github.io/tsExtremes/reference/piCP.html</loc>
+  </url>
+  <url>
+    <loc>https://gburitica.github.io/tsExtremes/reference/rainfall.html</loc>
   </url>
 </urlset>
