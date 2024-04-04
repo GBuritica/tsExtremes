@@ -14,23 +14,16 @@ knitr::opts_chunk$set(
 )
 ```
 
-# tsExtremes
+# tsExtremes package tutorial
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-The package tsExtremes gathers functions for analyzing the extremes of stationary time series and assessing the time dependencies of extremes.
+The package tsExtremes includes functions for studying extreme features of heavy-tailed time series.
+It can be used to compute estimates of the tail index, the extremal index or cluster lengths of the series. These are statistics of the series summarizing the magnitude of extreme records, and the number of concomitant records.
 
-For example, you can use it compute estimates of:
-
--   the tail index of the series,
-
--   the extremal index of a time series,
-
--   the cluster lengths of the time series.
-
-# Installation
+## Installation
 
 <!-- You can install the released version of tsExtremes from [CRAN](https://CRAN.R-project.org) with: -->
 
@@ -40,13 +33,14 @@ To get started, install the package from Github using the command:
 devtools::install_github('GBuritica/tsExtremes')
 ```
 
-# R Package tutorial
+## R Package tutorial
 
-The outline of this tutorial is as follows:
+This package tutorial includes two main windows on:
 
 1.  Tail index inference
-    -   In this vignette you can learn how to compute unbiased estimates of the tail index alpha of the series. The implementation is based on the Hill-type estimators in [@dehaan:mercadier:zhou:2016].
+    -   In this vignette you will learn how to compute estimates of the tail index $\alpha$ of the series. The implementation is based on the Hill-type estimators in [@dehaan:mercadier:zhou:2016].
+
 2.  Cluster inference
-    -   In this window you will learn how to compute the cluster process based estimates in [@buritica:meyer:mikosch:wintenberger:2021] for classical cluster statics. We consider the example of inference of the extremal index with the alpha cluster process [@buritica:mikosch:wintenberger:2021], and also an example of the cluster lengths.
+    -   In this vignette you will learn how to implement block estimates of cluster statistics; see [@buritica:mikosch:wintenberger:2021]. We consider the example of the extremal index based on the estimator proposed in [@buritica:meyer:mikosch:wintenberger:2021], and also an example of cluster lengths [@buritica:wintenberger:2024].
 
 ## References

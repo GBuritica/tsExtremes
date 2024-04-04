@@ -1,23 +1,18 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# tsExtremes
+# tsExtremes package tutorial
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The package tsExtremes gathers functions for analyzing the extremes of
-stationary time series and assessing the time dependencies of extremes.
+The package tsExtremes includes functions for studying extreme features
+of heavy-tailed time series. It can be used to compute estimates of the
+tail index, the extremal index or cluster lengths of the series. These
+are statistics of the series summarizing the magnitude of extreme
+records, and the number of concomitant records.
 
-For example, you can use it compute estimates of:
-
-- the tail index of the series,
-
-- the extremal index of a time series,
-
-- the cluster lengths of the time series.
-
-# Installation
+## Installation
 
 <!-- You can install the released version of tsExtremes from [CRAN](https://CRAN.R-project.org) with: -->
 
@@ -27,20 +22,20 @@ To get started, install the package from Github using the command:
 devtools::install_github('GBuritica/tsExtremes')
 ```
 
-# R Package tutorial
+## R Package tutorial
 
-The outline of this tutorial is as follows:
+This package tutorial includes two main windows on:
 
 1.  Tail index inference
-    - In this vignette you can learn how to compute unbiased estimates
-      of the tail index alpha of the series. The implementation is based
-      on the Hill-type estimators in (Haan, Mercadier, and Zhou 2016).
+    - In this vignette you will learn how to compute estimates of the
+      tail index $\alpha$ of the series. The implementation is based on
+      the Hill-type estimators in (Haan, Mercadier, and Zhou 2016).
 2.  Cluster inference
-    - In this window you will learn how to compute the cluster process
-      based estimates in (Buriticá et al. 2021) for classical cluster
-      statics. We consider the example of inference of the extremal
-      index with the alpha cluster process (Buriticá, Mikosch, and
-      Wintenberger 2022), and also an example of the cluster lengths.
+    - In this vignette you will learn how to implement block estimates
+      of cluster statistics; see (Buriticá, Mikosch, and Wintenberger
+      2022). We consider the example of the extremal index based on the
+      estimator proposed in (Buriticá et al. 2021), and also an example
+      of cluster lengths (Buriticá and Wintenberger 2024).
 
 ## References
 
@@ -58,7 +53,15 @@ Variations on the Extremal Index.” *Zap. Nauchn. Semin. POMI.* 30:
 <div id="ref-buritica:mikosch:wintenberger:2021" class="csl-entry">
 
 Buriticá, G., T. Mikosch, and O. Wintenberger. 2022. “Large Deviations
-of Lp Blocks of Regularly Varyinig Time Series.”
+of Lp Blocks of Regularly Varyinig Time Series.” *Stochastic Processes
+and Their Applications.* 161: 68–101.
+
+</div>
+
+<div id="ref-buritica:wintenberger:2024" class="csl-entry">
+
+Buriticá, G., and O. Wintenberger. 2024. “On the Asymptotics of Extremal
+Lp-Blocks Cluster Inference.” *arXiv:2212.13521*.
 
 </div>
 
