@@ -3,9 +3,16 @@ Protocol : open package, run build_site(), commit changes.
 
 
 Todo : 
-Update references
-Ref Pickands Balkema
-Ref moments of heavy-tails 
+Comment on choice of k for the Hill estimator. 
+Comment on bias/unbiased estimator.
+Edit the cluster file. 
+Check if the sidebar is ok.
+Put the Hill estimator in a definition box. 
+
+
+For the student code, integrate the automatic threshold selection with our code. It would be nice to comment on this. 
+
+
 
 
 
