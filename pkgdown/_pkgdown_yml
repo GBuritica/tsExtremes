@@ -1,8 +1,24 @@
-title: tsExtremes
 url: https://gburitica.github.io/tsExtremes/
 template:
   bootstrap: 5
-  bootswatch: lux
   bslib:
-    pkgdown-nav-height: 100px
-    ganalytics: G-03X4DCM0HF
+    base_font: {google: "Roboto"}
+    heading_font: {google: "Roboto Slab"}
+    code_font: {google: "JetBrains Mono"}
+  navbar:
+     bg: primary
+     type: light
+  home:
+    sidebar:
+    structure: [links, license, community, citation, authors, dev]
+  includes:
+    in_header: |
+       <!-- Global site tag (gtag.js) - Google Analytics -->
+       <script async src="https://www.googletagmanager.com/gtag/js?id={G-03X4DCM0HF}"#' ></script>
+       <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag(){dataLayer.push(arguments);}
+         gtag('js', new Date());
+
+         gtag('config', '{G-03X4DCM0HF}');
+       </script>
