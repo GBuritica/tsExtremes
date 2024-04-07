@@ -2,7 +2,7 @@
 title: "Tail index inference"
 author: Gloria Buriticá
 geometry: margin=3cm
-bibliography: "/Users/Buritica/Dropbox/These/git/tsExtremes/references.bib"
+bibliography: "references.bib"
 ---
 
 <style>
