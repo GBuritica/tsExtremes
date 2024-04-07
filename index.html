@@ -80,42 +80,36 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="tsextremes">tsExtremes<a class="anchor" aria-label="anchor" href="#tsextremes"></a>
+<div class="page-header"><h1 id="tsextremes-package-tutorial">tsExtremes package tutorial<a class="anchor" aria-label="anchor" href="#tsextremes-package-tutorial"></a>
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The package tsExtremes gathers functions for analyzing the extremes of stationary time series and assessing the time dependencies of extremes.</p>
-<p>For example, you can use it compute estimates of:</p>
-<ul>
-<li><p>the tail index of the series,</p></li>
-<li><p>the extremal index of a time series,</p></li>
-<li><p>the cluster lengths of the time series.</p></li>
-</ul>
-</div>
-<div class="section level1">
-<h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h1>
+<p>The package tsExtremes includes functions for studying extreme features of heavy-tailed time series. It can be used to compute estimates of the tail index, the extremal index or cluster lengths of the series. These are statistics of the series summarizing the magnitude of extreme records, and the number of concomitant records.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <!-- You can install the released version of tsExtremes from [CRAN](https://CRAN.R-project.org) with: -->
 <p>To get started, install the package from Github using the command:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'GBuritica/tsExtremes'</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="r-package-tutorial">R Package tutorial<a class="anchor" aria-label="anchor" href="#r-package-tutorial"></a>
-</h1>
-<p>The outline of this tutorial is as follows:</p>
+<div class="section level2">
+<h2 id="r-package-tutorial">R Package tutorial<a class="anchor" aria-label="anchor" href="#r-package-tutorial"></a>
+</h2>
+<p>This package tutorial includes two main windows on:</p>
 <ol style="list-style-type: decimal">
 <li>Tail index inference
 <ul>
-<li>In this vignette you can learn how to compute unbiased estimates of the tail index alpha of the series. The implementation is based on the Hill-type estimators in (Haan, Mercadier, and Zhou 2016).</li>
+<li>In this vignette you will learn how to compute estimates of the tail index <span class="math inline"><em>α</em></span> of the series. The implementation is based on the Hill-type estimators in (Haan, Mercadier, and Zhou 2016).</li>
 </ul>
 </li>
 <li>Cluster inference
 <ul>
-<li>In this window you will learn how to compute the cluster process based estimates in (Buriticá et al. 2021) for classical cluster statics. We consider the example of inference of the extremal index with the alpha cluster process (Buriticá, Mikosch, and Wintenberger 2022), and also an example of the cluster lengths.</li>
+<li>In this vignette you will learn how to implement block estimates of cluster statistics; see (Buriticá, Mikosch, and Wintenberger 2022). We consider the example of the extremal index based on the estimator proposed in (Buriticá et al. 2021), and also an example of cluster lengths (Buriticá and Wintenberger 2024).</li>
 </ul>
 </li>
 </ol>
+</div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
@@ -124,7 +118,10 @@
 Buriticá, G., N. Meyer, T. Mikosch, and O. Wintenberger. 2021. “Some Variations on the Extremal Index.” <em>Zap. Nauchn. Semin. POMI.</em> 30: 52–77.
 </div>
 <div id="ref-buritica:mikosch:wintenberger:2021" class="csl-entry">
-Buriticá, G., T. Mikosch, and O. Wintenberger. 2022. “Large Deviations of Lp Blocks of Regularly Varyinig Time Series.”
+Buriticá, G., T. Mikosch, and O. Wintenberger. 2022. “Large Deviations of Lp Blocks of Regularly Varyinig Time Series.” <em>Stochastic Processes and Their Applications.</em> 161: 68–101.
+</div>
+<div id="ref-buritica:wintenberger:2024" class="csl-entry">
+Buriticá, G., and O. Wintenberger. 2024. “On the Asymptotics of Extremal Lp-Blocks Cluster Inference.” <em>arXiv:2212.13521</em>.
 </div>
 <div id="ref-dehaan:mercadier:zhou:2016" class="csl-entry">
 Haan, L. de, G. Mercadier, and C. Zhou. 2016. “Adapting Extreme Value Statistics to Financial Time Series: Dealing Wih Bias and Serial Dependence.” <em>Finance and Stochastics</em> 20: 321–54.
@@ -132,7 +129,6 @@ Haan, L. de, G. Mercadier, and C. Zhou. 2016. “Adapting Extreme Value Statisti
 </div>
 </div>
 </div>
-
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">

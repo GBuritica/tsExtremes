@@ -96,8 +96,8 @@ Buriticá</h4>
     
     
 <style>
-p.comment {
-background-color: #DCDCDC;
+p.comment{
+background-color: #E3E7F1;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
@@ -105,69 +105,97 @@ border-radius: 5px;
 font-style: italic;
 }
 
+
+
 </style>
-<p>This tutorial reviews statistical methods from extreme value theory
-for risk assessment. Quantifying risk is crucial in numerous
-engineering, econometric or climate science applications to prevent the
-societal, economic and environmental consequences of hazards. For
-example, hydrologists carefully analyse extreme precipitation periods
-because these can lead to flooding or land sliding, and for this reason,
-their reports are essential for policymakers. Daily precipitation
-amounts have been collected systematically in Europe only since the late
-last century. Therefore, to determine the maximum of daily rain that
-will be recorded in the next 30 years we propose to use the tools is
-extreme value theory.</p>
-<div class="section level4">
-<h4 id="fisher-tipett-gnedenko-theorem">Fisher-Tipett-Gnedenko Theorem<a class="anchor" aria-label="anchor" href="#fisher-tipett-gnedenko-theorem"></a>
-</h4>
-<p>Let’s say that we sample <span class="math inline">\(X_1, \dots,
-X_n\)</span>, independent and identically distributed (iid) values from
-a univariate distribution <span class="math inline">\(F\)</span>.</p>
-<p class="comment">
-<strong>Theorem.</strong> (Fisher-Tipett-Gnedenko) Assume there exists
-renormalizing constants <span class="math inline">\(a_n&gt;0,b_n \in
-\mathbb{R}\)</span> and a non-degenerate distribution <span class="math inline">\(G{\gamma}\)</span> such that <span class="math display">\[
-\lim_{n \to + \infty}
-Pr \left( \max_{t=1,\dots,n} X_t \le  x\,a_n + b_n\right) \;=\; G(x),
-\quad x \in \mathbb{R},
-\]</span> then G belongs to the family of generalized extreme value
-distributions and <span class="math display">\[
-G(x)\;= \; G_{\gamma}(x; \mu, \sigma) \; =\; \exp\{ - (1+
-\gamma\tfrac{(x-\mu)}{\sigma})_{+}^{-1/\gamma}\},  \quad x \in
-\mathbb{R}.
-\]</span> for <span class="math inline">\(\mu \in \mathbb{R}\)</span>,
-<span class="math inline">\(\sigma &gt; 0\)</span> and <span class="math inline">\(\gamma \in \mathbb{R}\)</span> such as for <span class="math inline">\(\gamma = 0\)</span> we read the above expression
-as the limit as <span class="math inline">\(\gamma\)</span> approaches
-zero. In this case we say that <span class="math inline">\(F\)</span>
-belong to the <strong>maximum domain of attraction</strong> of <span class="math inline">\(G_{\gamma}\)</span>.
-</p>
-<p>We refer to the quantity <span class="math inline">\(1/\gamma\)</span> as the
-<strong>tail-index</strong> of the distribution <span class="math inline">\(F\)</span>. In the case where <span class="math inline">\(\gamma &gt; 0\)</span>, we say the distribution
-<span class="math inline">\(F\)</span> is <strong>heavy-tailed</strong>.
-Moreover, we can fully characterize the latter maximum domain of
-attraction with the</p>
-<p class="comment">
-<strong>Theorem.</strong> The distribution <span class="math inline">\(F\)</span> is in the maximum domain of attraction
-of <span class="math inline">\(G=G_{\gamma}\)</span>, whith <span class="math inline">\(\gamma &gt; 0\)</span>, if and only if the
-survival function <span class="math inline">\(\bar{F} : x \mapsto Pr(X_1
-&gt; x)\)</span> is regularly varying of index <span class="math inline">\(\alpha = 1/\gamma\)</span>, i.e., for all <span class="math inline">\(t &gt; 0\)</span>, <span class="math display">\[
-\lim_{x \to +\infty} \frac{\bar{F}(tx)}{\bar{F}(x)}
-\]</span> and one can choose <span class="math inline">\(b_n =
-0\)</span> and <span class="math inline">\((a_n)\)</span> verifying
-<span class="math inline">\(n\, Pr(X_1 &gt; a_n) \to 1\)</span> as <span class="math inline">\(n \to \infty\)</span>. We refer to <span class="math inline">\(\alpha\)</span> as the
-<strong>tail-index</strong>.
-</p>
-<p>Some examples of heavy-tailed distributions are the Pareto, the
-t-student, the Burr or the Fréchet distribution.</p>
+<div class="section level3">
+<h3 id="main-goals-of-this-tutorial">Main goals of this tutorial<a class="anchor" aria-label="anchor" href="#main-goals-of-this-tutorial"></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li>Review heavy-tailed random variables.</li>
+<li>Compute estimates of the tail index.</li>
+</ol>
+<p>The tail index <span class="math inline">\(\alpha &gt; 0\)</span> of
+a heavy-tailed random variable <span class="math inline">\(X\)</span> is
+associated with the magnitude of rare event. If <span class="math inline">\(\alpha\)</span> is small, high records are more
+likely to happen than if <span class="math inline">\(\alpha\)</span> is
+large.</p>
 </div>
 <div class="section level3">
-<h3 id="estimation-of-the-tail-index">Estimation of the tail-index<a class="anchor" aria-label="anchor" href="#estimation-of-the-tail-index"></a>
+<h3 id="heavy-tailed-random-variables">Heavy-tailed random variables<a class="anchor" aria-label="anchor" href="#heavy-tailed-random-variables"></a>
 </h3>
-<p>In what follows, we review how to estimate the tail-index from a
-sample <span class="math inline">\(X_1, \dots, X_n\)</span> of iid
-observations using the Hill-type estimators. For stationary time series
-with short-range dependence, these estimators still yield good results
-in general. First, we start by loading the <span class="math inline">\(\texttt{tsExtremes}\)</span> package.</p>
+In our setting, a real-valued random variable <span class="math inline">\(X\)</span> is heavy-tailed when its tail
+distribution has a polynomial decay. To state this condition formally,
+we will need the notion of regular variation.
+<p class="comment">
+<strong>Definition.</strong> (Regular variation) A real valued random
+variable <span class="math inline">\(X\)</span> with distribution <span class="math inline">\(F\)</span> is regularly varying with
+<strong>tail-index</strong> <span class="math inline">\(\alpha &gt;
+0\)</span> if <span class="math inline">\(\lim_{t \to \infty}\bar
+F(tx)/\bar F(t) = x^{-\alpha},\)</span> where <span class="math inline">\(\bar F(t) := 1- F(t)\)</span> is the tail
+distribution.
+</p>
+<p>
+In the following we call heavy-tailed variables those with regularly
+varying distributions. <strong>Examples</strong> of heavy-tailed
+variables are the Pareto random variables, the Fréchet, the <span class="math inline">\(t-\)</span>student, the Burr or the log Gamma
+distribution. In comparison, light-tailed distributions include the
+exponential, the Weibull and the gaussian distribution. For these
+light-tailed examples, its tail distributions decay at an exponential
+rate. In practice this means that is very rare to record high levels
+sampling from them, and instead the values concentrate around the mean.
+For heavy-tailed random variables, the variance and the mean can
+sometimes equal infinity as we see next.
+</p>
+<p>As we already mentioned, the tail index of a heavy-tailed random
+variable plays an important role in determining the heaviness of tails.
+Moreover, if <span class="math inline">\(X\)</span> is non-negative and
+regularly varying with index <span class="math inline">\(\alpha &gt;
+0\)</span>, then for <span class="math inline">\(p &gt; \alpha\)</span>,
+<span class="math inline">\(E[X^p] = + \infty\)</span>, and for <span class="math inline">\(p &lt; \alpha\)</span>, <span class="math inline">\(E[X^p] &lt; + \infty\)</span>. In particular this
+means that for <span class="math inline">\(\alpha \in (0,2)\)</span>,
+the variance of the variable <span class="math inline">\(X\)</span> is
+infinite and for <span class="math inline">\(\alpha \in (0,1)\)</span>
+its mean is infinite. In other words, small values of <span class="math inline">\(\alpha\)</span> indicate heavier tails than larger
+values of <span class="math inline">\(\alpha\)</span>. For these
+reasons, estimating the tail-index of a random variable <span class="math inline">\(X\)</span> is important to quantify the magnitude
+of rare events. For a full overview on regularly varying distributions
+we refer to <span class="citation">(Bingham, Goldie, and Teugels
+1987)</span>.</p>
+</div>
+<div class="section level3">
+<h3 id="inference-of-the-tail-index">Inference of the tail-index<a class="anchor" aria-label="anchor" href="#inference-of-the-tail-index"></a>
+</h3>
+<p>To estimate the tail-index, we consider a sample of observations
+<span class="math inline">\(X_1, \dots, X_n\)</span> with the same
+distribution of <span class="math inline">\(X\)</span>, and not
+necessarily independent. For weakly dependent stationary time series,
+think for example we sample from an AR(1) model, or from an independent
+series. In these case, the Hill estimator is a general procedure to
+estimate the tail-index of <span class="math inline">\(X\)</span>, and
+it is given by <span class="math display">\[
+\frac{1}{\widehat{\alpha}^n} \;  :=
+\;  \frac{1}{\widehat{\alpha}^n(k^\prime)}  := \frac{1}{k^\prime} \,
+\sum_{t=1}^{n} \log(X_t/X_{(k^\prime+1)})1(X_t &gt; X_{(k^\prime +1)}),
+\]</span> where <span class="math inline">\(X_{(1)} \geq X_{(2)} \geq
+\dots \geq  X_{(n)}\)</span> are the sorted sample records, and <span class="math inline">\(k^\prime\)</span> is a tuning parameter for the
+Hill estimator. Actually, if <span class="math inline">\(X\)</span>
+follows the Pareto distribution with tail index <span class="math inline">\(\alpha\)</span> then <span class="math inline">\(F(t) = 1 -x^{-\alpha}\)</span>, and the
+strightforward calculations imply <span class="math inline">\(E[\log(X)]
+= 1/\alpha\)</span>. In all generality, the renormalized largest records
+of the sample follow asymptotically a Pareto distribution by means of
+the Pickands-Balkdema de Haan Theorem also called ‘Peaks over
+Thresholds’ Theorem. This means, that if we restrict our sample to the
+<span class="math inline">\(k^\prime\)</span> largest records, then we
+see how the Hill estimator is a good candidate to estimate tail-index.
+We refer in all generality to Chapter 4 in <span class="citation">(Beirlant et al. 2004)</span>.</p>
+</div>
+<div class="section level3">
+<h3 id="tsextremes-package-implementation">tsExtremes package implementation<a class="anchor" aria-label="anchor" href="#tsextremes-package-implementation"></a>
+</h3>
+<p>To implement the Hill estimator with the tsExtremes package, we start
+by loading the <span class="math inline">\(\texttt{tsExtremes}\)</span>
+package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GBuritica/tsExtremes" class="external-link">tsExtremes</a></span><span class="op">)</span></span></code></pre></div>
 <p>The <span class="math inline">\(\texttt{tsExtremes}\)</span> package
@@ -177,6 +205,21 @@ record is available. To compute the tail-index and produce a Hill Plot
 of summer rainfall in Brest we use the function below.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/alphaestimator.html">alphaestimator</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">$</span><span class="va">BREST</span><span class="op">[</span><span class="va">rainfall</span><span class="op">$</span><span class="va">SEASON</span><span class="op">==</span><span class="st">"SPRING"</span><span class="op">]</span>, plot<span class="op">=</span><span class="cn">F</span> , R0 <span class="op">=</span> <span class="fl">100</span>,  hill<span class="op">=</span><span class="cn">T</span> ,  k1 <span class="op">=</span> <span class="fl">300</span> <span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-beirlant:goegebeur:teugels:segers:dewaal:ferro:2004" class="csl-entry">
+Beirlant, J., Y. Goegebeur, J. Teugels, J. Segers, D. de Waal, and Ferro
+C. 2004. <em>Statistics of Extremes: Theory and Applications</em>. West
+Sussex: John Wiley &amp; Sons.
+</div>
+<div id="ref-bingham:goldie:teugels:1987" class="csl-entry">
+Bingham, N. H., C. M. Goldie, and J. L. Teugels. 1987. <em>Regular
+Variation</em>. Cambridge: Cambridge University Press.
+</div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
