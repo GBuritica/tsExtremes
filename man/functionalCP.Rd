@@ -10,7 +10,7 @@ functionalCP(
   klim0 = 100,
   n0 = length(path0),
   p0 = "alpha",
-  cluster_func = function(block, p0, alpha0) max(abs(block)^alpha0),
+  cluster_func = function(block) max(abs(block)^alpha0),
   plot = F
 )
 }
@@ -37,7 +37,6 @@ Estimates of the cluster statistics and based on the alpha cluster Process
 \examples{
 path  <- ARCHm(20000)
 alpha <- 1/alphaestimator(path,k1=1200)$xi ## The real value should be one
-two options are available for computing the extremal index
-ei  <- functionalCP(path,1,100,plot=T)
-ei2 <- eiCP(path,1,100,plot=T)
+ei    <- functionalCP(path,1,plot=T)       ## two options are available for computing the extremal index
+ei2   <- eiCP(path,1,plot=T)
 }
