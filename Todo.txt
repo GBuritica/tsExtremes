@@ -1,5 +1,10 @@
+### oxygen to build documentation
+
+
+### Updating website : 
 To configure : https://pkgdown.r-lib.org/articles/pkgdown.html
-Protocol : open package, run build_site(), commit changes.
+Protocol : open package, run build_site() and commit changes or run directly build_site_github_pages()
+https://psyteachr.github.io/intro-r-pkgs/08-maintenance.html
 
 
 Todo : 
