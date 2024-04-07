@@ -73,7 +73,7 @@
 <span>  klim0 <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  n0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">path0</span><span class="op">)</span>,</span>
 <span>  p0 <span class="op">=</span> <span class="st">"alpha"</span>,</span>
-<span>  cluster_func <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">block</span>, <span class="va">p0</span>, <span class="va">alpha0</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">block</span><span class="op">)</span><span class="op">^</span><span class="va">alpha0</span><span class="op">)</span>,</span>
+<span>  cluster_func <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">block</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">block</span><span class="op">)</span><span class="op">^</span><span class="va">alpha0</span><span class="op">)</span>,</span>
 <span>  plot <span class="op">=</span> <span class="cn">F</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -114,7 +114,12 @@ An estimate of the asymptotic variance is also provided using cluster process in
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">path</span>  <span class="op">&lt;-</span> <span class="fu"><a href="ARCHm.html">ARCHm</a></span><span class="op">(</span><span class="fl">20000</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fu"><a href="alphaestimator.html">alphaestimator</a></span><span class="op">(</span><span class="va">path</span>,k1<span class="op">=</span><span class="fl">1200</span><span class="op">)</span><span class="op">$</span><span class="va">xi</span> <span class="co">## The real value should be one</span></span></span>
+<span class="r-in"><span><span class="va">ei</span>    <span class="op">&lt;-</span> <span class="fu">functionalCP</span><span class="op">(</span><span class="va">path</span>,<span class="fl">1</span>,plot<span class="op">=</span><span class="cn">T</span><span class="op">)</span>       <span class="co">## two options are available for computing the extremal index</span></span></span>
+<span class="r-in"><span><span class="va">ei2</span>   <span class="op">&lt;-</span> <span class="fu"><a href="eiCP.html">eiCP</a></span><span class="op">(</span><span class="va">path</span>,<span class="fl">1</span>,plot<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="functionalCP-1.png" alt="" width="700" height="433"></span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
