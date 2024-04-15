@@ -1,5 +1,5 @@
 ---
-title: "Tail index inference"
+title: "Section 1: Tail-index inference"
 author: Gloria Buriticá
 geometry: margin=3cm
 bibliography: "references.bib"
@@ -31,29 +31,63 @@ knitr::opts_chunk$set(
   2. Compute estimates of the tail index.
 
 
-The tail index $\alpha > 0$ of a heavy-tailed random variable $X$ is associated with the magnitude of rare event. 
-If $\alpha$ is small, high records are more likely to happen than if $\alpha$ is large.  
+The tail-index $\alpha > 0$ of a heavy-tailed random variable $X$ is associated with the magnitude of rare events, in this section we review a definition of heavy-tailed variables.
+The tail-index is a key statistic in risk assessment applications because it measures the magnitude of extremes. Roughly speaking, when $\alpha$ is small, the extremes are highly significant, and from a practical perspective, this translates to high-impact consequences.  For example, in hydrology heavy precipitation amounts lead to devastating losses.
+To sum up, if $\alpha$ is small, extremely high records are more likely to happen than if $\alpha$ is large. 
 
 
 ### Heavy-tailed random variables
 
-In our setting, a real-valued random variable $X$ is heavy-tailed when its tail distribution has a polynomial decay. To state this condition formally, we will need the notion of regular variation. 
+In our setting, we consider a real-valued random variable $X$ and we say it is heavy-tailed when its tail distribution has a polynomial decay. 
+To fomalize this definition we introduce the concept of regular variation.
+<br>
+<br>
+
 <p class="comment">
 **Definition.** (Regular variation)
-A real valued random variable $X$ with distribution $F$ is regularly varying with **tail-index** $\alpha > 0$ if $\lim_{t \to \infty}\bar F(tx)/\bar F(t) = x^{-\alpha},$ where $\bar F(t) := 1- F(t)$ is the tail distribution.
+We say that a real valued random variable $X$ with distribution $F$ is regularly varying with **tail-index** $\alpha > 0$ if $\lim_{t \to \infty}\bar F(tx)/\bar F(t) = x^{-\alpha},$ where $\bar F(t) := 1- F(t)$ is the tail distribution.
 <p>
 
-In the following we call heavy-tailed variables those with regularly varying distributions. __Examples__ of heavy-tailed variables are the Pareto random variables, the Fréchet, the $t-$student, the Burr or the log Gamma distribution. 
-In comparison, light-tailed distributions include the exponential, the Weibull and the gaussian distribution. 
-For these light-tailed examples, its tail distributions decay at an exponential rate. 
-In practice this means that is very rare to record high levels sampling from them, and instead the values concentrate around the mean. 
-For heavy-tailed random variables, the variance and the mean can sometimes equal infinity as we see next.
-\par 
-As we already mentioned, the tail index of a heavy-tailed random variable plays an important role in determining the heaviness of tails. Moreover, if $X$ is non-negative and regularly varying with index $\alpha > 0$, then for $p > \alpha$, $E[X^p] = + \infty$, and for $p < \alpha$, $E[X^p] < + \infty$. 
-In particular this means that for $\alpha \in (0,2)$, the variance of the variable $X$ is infinite and for $\alpha \in (0,1)$ its mean is infinite. 
-In other words, small values of $\alpha$ indicate heavier tails than larger values of $\alpha$. 
+In the following we call heavy-tailed variables those with regularly varying distributions.
+
+__Examples of heavy-tailed variables__ are the Pareto random variables, the Fréchet, the $t-$student, the Burr or the log Gamma distribution. 
+
+__Examples of light-tailed distributions__ include then the exponential, the Weibull and the gaussian distribution. For these light-tailed examples, its tail distributions decay at an exponential rate and not at a polynomial rate as for regularly varying distribution. In practice this means that is very rare to record high levels sampling from them, and instead the values concentrate around the mean. 
+
+
+#### Moments of regularly varying distributions
+In the case of regularly varying random variables, the variance and the mean can sometimes equal infinity. This means that sampling from this variable, we obtain highly scattered observations in comparison with light-tailed distributions. To see this consider the following sample, and its respective boxplot.
+
+```{r scattered observations, echo = T, message=F, fig.height = 2, fig.width = 4, fig.align = "center"}
+require(VGAM)
+require(ggplot2)
+n     <- 1000
+alpha <- 2
+sample_exponential <- 1 + rexp(n)
+sample_pareto      <- rpareto(n, shape=alpha)
+```
+
+```{r scattered observations plot, echo = F,fig.height = 2, fig.width = 4, fig.align = "center"}
+df <- data.frame( values = c(sample_exponential,sample_pareto), type = c(rep('Exp',n), rep('Pareto',n)) )
+p <- ggplot(df) + geom_boxplot(aes(y=values, color = type)) 
+p + theme(
+  plot.title  = element_text('Comparison light- and heavy-tailed samples'),
+  axis.title.x = element_blank(),
+  axis.text.x = element_blank(),
+  axis.ticks  = element_blank()
+  ) ## code for styling margins
+```
+
+As we already mentioned, the tail index of a heavy-tailed random variable plays an important role in determining the heaviness of tails. 
+
+__Moments' property: __ If $X$ is non-negative and regularly varying with index $\alpha > 0$, then for $p > \alpha$, $E[X^p] = + \infty$, and for $p < \alpha$, $E[X^p] < + \infty$.
+
+In particular the moments' property entails that for $\alpha \in (0,2)$, the variance of the variable $X$ is infinite and for $\alpha \in (0,1)$ its mean is infinite. In other words, small values of $\alpha$ indicate heavier tails than larger values of $\alpha$.
 For these reasons, estimating the tail-index of a random variable $X$ is important to quantify the magnitude of rare events. 
 For a full overview on regularly varying distributions we refer to  [@bingham:goldie:teugels:1987].
+
+
+
 
 ### Inference of the tail-index
 
