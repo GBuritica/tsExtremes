@@ -164,8 +164,9 @@ Finally, as expected we can see from the plot above that when $X$ follows the Fr
 From this plot we take that in this case we need to choose $k^\prime = k_n^\prime$ from the Hill estimator rather small compared to $n$ to satisfactorily describe the tail properties of the variable $X$. 
 
 ### tsExtremes package implementation
-\par 
+ 
 
+#### Hill estimator
 We are now ready to use the tsExtremes package to compute Hill estimates of the tail-index. We start by loading the $\texttt{tsExtremes}$ package.
 
 ```{r setup}
@@ -173,19 +174,32 @@ library(tsExtremes)
 ```
 
 ```{r unbiased-hill, fig.height = 4, fig.width = 9, fig.align = "center"}
-h <- hillestimator(sample_pareto, plot=T , k1 = 1:n )
-h <- hillestimator(sample_frechet, plot=T , k1 = 1:n )
+h <- hillestimator(sample_pareto, plot=T , k1=1:500 )
+abline(h=1/alpha)
+h <- hillestimator(sample_frechet, plot=T , k1=1:500 )
+abline(h=1/alpha)
 ```
+We see that for the Fréchet sample it is important to choose the tuning parameter relatively small  to obtain nice estimates of the tail-index. 
 
 
+#### Unbiased Hill estimator
 
-The $\texttt{tsExtremes}$ package includes the rainfall dataset, containing daily rainfall records from nine different weather stations in France. The data and season of each record is available. To compute the tail-index and produce a Hill Plot of summer rainfall in Brest we use the function below.
+As we mentioned, the choice of $k^\prime$ is key to obtain unbiased estimates of the tail-index. 
+To choose $k^\prime$ one idea is to the previous plot, so-called the Hill plot, and pick a value from a range where the estimated values are steady as a function of $k^\prime$. 
+However, often in practice it is not clear how to find this steady region when the estimator is very unstable as a function of $k^\prime$. 
+[@dehaan:mercadier:zhou:2016] propose a bias-correction methodology of the Hill-estimator which allows to obtain Hill-based estimates that are more robust to the choice of the tuning parameter. 
+We compare both estimator in the following case study of precipitation amounts.
+The $\texttt{tsExtremes}$ package includes the rainfall dataset, containing daily rainfall records from nine different weather stations in France. 
+The data and season of each record is available. To compute the tail-index and produce a Hill Plot of summer rainfall in Brest we use the function below.
 
 
 
 ```{r unbiased-hill-data, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
-h <- alphaestimator(rainfall$BREST[rainfall$SEASON=="SPRING"], plot=F , R0 = 100,  hill=T ,  k1 = 300 )
+h <- alphaestimator(rainfall$BREST[rainfall$SEASON=="SPRING"], plot=T , R0 = 100,  hill=T ,  k1 = 300 )
 ```
+
+We see fro the plot that with the Hill estimator it is not very clear how to choose the tuning parameter. 
+Instead, the unbiased-Hill procedure is stable over a wider range of values which facilitates chooing $k^\prime$.
 
 
 ## References
