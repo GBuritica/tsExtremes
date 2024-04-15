@@ -4,13 +4,13 @@
 \alias{hillestimator}
 \title{Compute (tail)-index}
 \usage{
-hillestimator(path, k0 = NULL, plot = F)
+hillestimator(path, k1 = NULL, plot = F)
 }
 \arguments{
 \item{path}{(vector of univariate observations)}
 
-\item{k0}{(vector of order statistics to compute Hill estimates).
-It uses k0 = n*0.05 otherwise}
+\item{k1}{(vector of order statistics to compute Hill estimates).
+It uses k1 = n*0.05 otherwise}
 
 \item{plot}{(T or F if a plot should be shown).}
 }
