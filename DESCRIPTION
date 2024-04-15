@@ -21,7 +21,8 @@ Imports:
    ExtDist,
    boot,
    VGAM,
-   ggplot2 	
+   ggplot2,
+   ggpubr 	
 Suggests:
     boot,
     knitr,
