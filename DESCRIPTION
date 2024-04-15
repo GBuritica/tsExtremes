@@ -19,13 +19,13 @@ Imports:
    evd, 
    fExtremes,
    ExtDist,
-   boot, 	
+   boot,
+   VGAM,
+   ggplot2 	
 Suggests:
     boot,
     knitr,
-    rmarkdown,
-    VGAM,
-    ggplot2 
+    rmarkdown
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
