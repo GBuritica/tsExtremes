@@ -95,9 +95,10 @@ Buriticá</h4>
 
     
     
+&lt;
 <style>
-p.comment {
-background-color: #DCDCDC;
+p.comment{
+background-color: #E3E7F1;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
@@ -106,17 +107,60 @@ font-style: italic;
 }
 
 </style>
-<p>In the vignette Tail index inference, you learnt how to estimate the
-tail-index of a distribution from a sample identically distributed
-random variables. We now focus on analyzing the time dependencies of our
-data. In this tutorial you will learn how to estimate the extremal index
-and further cluster statistics of the series.</p>
+<div class="section level3">
+<h3 id="main-goals-of-this-tutorial">Main goals of this tutorial<a class="anchor" aria-label="anchor" href="#main-goals-of-this-tutorial"></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li>Review heavy-tailed time series variables.</li>
+<li>Review the extremal index and cluster statistics.</li>
+<li>Compute estimates of cluster statistics.</li>
+</ol>
+<p>Previously you learnt how to estimate the tail-index of a regularly
+varying random variable <span class="math inline">\(X\)</span>, which
+quantifies the magnitude of extremes. In this section we consider
+heavy-tailed time series <span class="math inline">\((X_t)\)</span>, and
+we focus on studying the dependence structure of extremes. The main
+question that we would like to answer is how one extreme record can
+trigger future heavy records.</p>
+</div>
+<div class="section level3">
+<h3 id="heavy-tailed-random-vectors">Heavy-tailed random vectors<a class="anchor" aria-label="anchor" href="#heavy-tailed-random-vectors"></a>
+</h3>
+<p>We now consider an <span class="math inline">\(\mathbb{R}^d\)</span>-valued time series <span class="math inline">\((X_t)\)</span> and we characterize next
+heavy-tailed series by means on the notion of multivariate regular
+variation. <br><br></p>
+<p class="comment">
+<strong>Definition.</strong> (Regular variation) We say that an <span class="math inline">\(\mathbb{R}^d\)</span>-valued stationary series
+<span class="math inline">\((X_t)\)</span> is regularly varying with
+<strong>tail-index</strong> <span class="math inline">\(\alpha &gt;
+0\)</span> if for all <span class="math inline">\(h &gt; 0\)</span>, the
+vector <span class="math inline">\((X_0,X_1,\dots,X_h)\)</span>
+satisfies multivariate regular variation: there exists <span class="math inline">\((\Theta_t)\)</span> such that, for <span class="math inline">\(y &gt; 1\)</span>, <span class="math display">\[
+\mathbb{P}( x^{-1}|X_0| &gt; y,  |X_0|^{-1}(X_t)_{t=-h,\dots,h} \in
+\cdot \mid |X_0| &gt; x  ) \to
+y^{-\alpha}\mathbb{P}((\Theta_t)_{t=-h,\dots,h} \in \cdot ),
+\]</span> as <span class="math inline">\(x \to \infty\)</span>, and
+<span class="math inline">\(|\Theta_0| = 1\)</span>. The process <span class="math inline">\((\Theta_t)\)</span> is called the
+<strong>spectral-tail</strong> process of the series.
+</p>
+<p>
+</p>
+<p>The spectral-tail process plays an important role in the
+understanding of the space and time dependencies of the extremes of the
+series. It measures the impact of one extreme record at time zero on the
+future behavior of the series. Moreover, we see next that many common
+time series lie within the framework of heavy-tailed time series.</p>
+<p><strong>Examples of heavy-tailed time series</strong> include linear
+filters with regularly varying innovations, and also GARCH models. These
+examples are discussed in all generality in <span class="citation">(Kulik and Soulier 2020)</span>.</p>
+</div>
 <div class="section level3">
 <h3 id="extremal-index">Extremal index<a class="anchor" aria-label="anchor" href="#extremal-index"></a>
 </h3>
-<p>The extremal index is motivated by the findings in (Newell, 1964),
-(Leadbetter, 1983), and (Leadbetter <em>et al.</em>, 1983), who
-discovered that for numerous real-valued stationary sequences <span class="math inline">\((X_t)\)</span>, <span class="math display">\[
+<p>The extremal index of a stationary time series was motivated by the
+findings in (Newell, 1964), (Leadbetter, 1983), and (Leadbetter <em>et
+al.</em>, 1983), who discovered that for numerous real-valued stationary
+sequences <span class="math inline">\((X_t)\)</span>, <span class="math display">\[
 Pr \left( \max_{t=1,\dots,n} |X_t| \le u_n \right) \; \approx \; \Big[
 Pr( X_1 \le u_n) \Big]^{n \theta_X} \; = \; Pr \left( \max_{t=1,\dots,n}
 |X^\prime_t| \le u_n \right)^{\theta_X}, \quad n \to \infty,
@@ -223,6 +267,16 @@ index analysis. We can now apply our method to this data set.</p>
 <span><span class="va">alphae</span>       <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fu"><a href="../reference/alphaestimator.html">alphaestimator</a></span><span class="op">(</span><span class="va">path</span>,k1<span class="op">=</span><span class="fl">150</span><span class="op">)</span><span class="op">$</span><span class="va">xi</span> </span>
 <span><span class="va">estimate</span>     <span class="op">&lt;-</span> <span class="fu"><a href="../reference/piCP.html">piCP</a></span><span class="op">(</span><span class="va">path</span>,<span class="va">alphae</span>,plot<span class="op">=</span><span class="cn">T</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="Cluster-functional-Analysis_files/figure-html/rainfall%20cluster-1.png" width="864" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-kulik:soulier:2020" class="csl-entry">
+Kulik, R., and P. Soulier. 2020. <em>Heavy-Tailed Time Series</em>.
+Springer.
+</div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

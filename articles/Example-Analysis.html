@@ -295,23 +295,50 @@ properties of the variable <span class="math inline">\(X\)</span>.</p>
 <div class="section level3">
 <h3 id="tsextremes-package-implementation">tsExtremes package implementation<a class="anchor" aria-label="anchor" href="#tsextremes-package-implementation"></a>
 </h3>
+<div class="section level4">
+<h4 id="hill-estimator">Hill estimator<a class="anchor" aria-label="anchor" href="#hill-estimator"></a>
+</h4>
 <p>We are now ready to use the tsExtremes package to compute Hill
 estimates of the tail-index. We start by loading the <span class="math inline">\(\texttt{tsExtremes}\)</span> package.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GBuritica/tsExtremes" class="external-link">tsExtremes</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hillestimator.html">hillestimator</a></span><span class="op">(</span><span class="va">sample_pareto</span>, plot<span class="op">=</span><span class="cn">T</span> , k1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span> <span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hillestimator.html">hillestimator</a></span><span class="op">(</span><span class="va">sample_pareto</span>, plot<span class="op">=</span><span class="cn">T</span> , k1<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">500</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="va">alpha</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Example-Analysis_files/figure-html/unbiased-hill-1.png" width="864" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hillestimator.html">hillestimator</a></span><span class="op">(</span><span class="va">sample_frechet</span>, plot<span class="op">=</span><span class="cn">T</span> , k1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span> <span class="op">)</span></span></code></pre></div>
-<p><img src="Example-Analysis_files/figure-html/unbiased-hill-2.png" width="864" style="display: block; margin: auto;"></p>
-<p>The <span class="math inline">\(\texttt{tsExtremes}\)</span> package
-includes the rainfall dataset, containing daily rainfall records from
-nine different weather stations in France. The data and season of each
-record is available. To compute the tail-index and produce a Hill Plot
-of summer rainfall in Brest we use the function below.</p>
+<code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hillestimator.html">hillestimator</a></span><span class="op">(</span><span class="va">sample_frechet</span>, plot<span class="op">=</span><span class="cn">T</span> , k1<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">500</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="va">alpha</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Example-Analysis_files/figure-html/unbiased-hill-2.png" width="864" style="display: block; margin: auto;">
+We see that for the Fréchet sample it is important to choose the tuning
+parameter relatively small to obtain nice estimates of the
+tail-index.</p>
+</div>
+<div class="section level4">
+<h4 id="unbiased-hill-estimator">Unbiased Hill estimator<a class="anchor" aria-label="anchor" href="#unbiased-hill-estimator"></a>
+</h4>
+<p>As we mentioned, the choice of <span class="math inline">\(k^\prime\)</span> is key to obtain unbiased
+estimates of the tail-index. To choose <span class="math inline">\(k^\prime\)</span> one idea is to the previous
+plot, so-called the Hill plot, and pick a value from a range where the
+estimated values are steady as a function of <span class="math inline">\(k^\prime\)</span>. However, often in practice it
+is not clear how to find this steady region when the estimator is very
+unstable as a function of <span class="math inline">\(k^\prime\)</span>.
+<span class="citation">(Haan, Mercadier, and Zhou 2016)</span> propose a
+bias-correction methodology of the Hill-estimator which allows to obtain
+Hill-based estimates that are more robust to the choice of the tuning
+parameter. We compare both estimator in the following case study of
+precipitation amounts. The <span class="math inline">\(\texttt{tsExtremes}\)</span> package includes the
+rainfall dataset, containing daily rainfall records from nine different
+weather stations in France. The data and season of each record is
+available. To compute the tail-index and produce a Hill Plot of summer
+rainfall in Brest we use the function below.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/alphaestimator.html">alphaestimator</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">$</span><span class="va">BREST</span><span class="op">[</span><span class="va">rainfall</span><span class="op">$</span><span class="va">SEASON</span><span class="op">==</span><span class="st">"SPRING"</span><span class="op">]</span>, plot<span class="op">=</span><span class="cn">F</span> , R0 <span class="op">=</span> <span class="fl">100</span>,  hill<span class="op">=</span><span class="cn">T</span> ,  k1 <span class="op">=</span> <span class="fl">300</span> <span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/alphaestimator.html">alphaestimator</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">$</span><span class="va">BREST</span><span class="op">[</span><span class="va">rainfall</span><span class="op">$</span><span class="va">SEASON</span><span class="op">==</span><span class="st">"SPRING"</span><span class="op">]</span>, plot<span class="op">=</span><span class="cn">T</span> , R0 <span class="op">=</span> <span class="fl">100</span>,  hill<span class="op">=</span><span class="cn">T</span> ,  k1 <span class="op">=</span> <span class="fl">300</span> <span class="op">)</span></span></code></pre></div>
+<p><img src="Example-Analysis_files/figure-html/unbiased-hill-data-1.png" width="864" style="display: block; margin: auto;"></p>
+<p>We see fro the plot that with the Hill estimator it is not very clear
+how to choose the tuning parameter. Instead, the unbiased-Hill procedure
+is stable over a wider range of values which facilitates chooing <span class="math inline">\(k^\prime\)</span>.</p>
+</div>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -325,6 +352,11 @@ Sussex: John Wiley &amp; Sons.
 <div id="ref-bingham:goldie:teugels:1987" class="csl-entry">
 Bingham, N. H., C. M. Goldie, and J. L. Teugels. 1987. <em>Regular
 Variation</em>. Cambridge: Cambridge University Press.
+</div>
+<div id="ref-dehaan:mercadier:zhou:2016" class="csl-entry">
+Haan, L. de, G. Mercadier, and C. Zhou. 2016. <span>“Adapting Extreme
+Value Statistics to Financial Time Series: Dealing Wih Bias and Serial
+Dependence.”</span> <em>Finance and Stochastics</em> 20: 321–54.
 </div>
 </div>
 </div>
