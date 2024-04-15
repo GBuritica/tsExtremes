@@ -56,15 +56,15 @@ __Examples of light-tailed distributions__ include then the exponential, the Wei
 
 
 #### Moments of regularly varying distributions
-In the case of regularly varying random variables, the variance and the mean can sometimes equal infinity. This means that sampling from this variable, we obtain highly scattered observations in comparison with light-tailed distributions. To see this consider the following sample, and its respective boxplot.
+In the case of regularly varying random variables, the variance and the mean can sometimes equal infinity. This means that sampling from this variable, we obtain highly scattered observations reaching higher records in comparison with light-tailed distributions. To see this consider the following samples, and its respective boxplot.
 
 ```{r scattered observations, echo = T, message=F, fig.height = 2, fig.width = 4, fig.align = "center"}
 library(VGAM)
 library(ggplot2)
-n     <- 1000
+n     <- 500
 alpha <- 2
 sample_exponential <- 1 + rexp(n)
-sample_pareto      <- rpareto(n, shape=alpha)
+sample_pareto      <- VGAM::rpareto(n, shape=alpha)
 ```
 
 ```{r scattered observations plot, echo = F,fig.height = 2, fig.width = 4, fig.align = "center"}
@@ -91,14 +91,24 @@ For a full overview on regularly varying distributions we refer to  [@bingham:go
 
 ### Inference of the tail-index
 
-To estimate the tail-index, we consider a sample of observations $X_1, \dots, X_n$ with the same distribution of $X$, and not necessarily independent.
-For weakly dependent stationary time series, think for example we sample from an AR(1) model, or from an independent series. 
-In these case, the Hill estimator is a general procedure to estimate the tail-index of $X$, and it is given by 
+In this subsection we now turn to the problem of esimating the tail-index from data.
+We consider a sample of observations $X_1, \dots, X_n$ with the same distribution of $X$, and not necessarily independent.
+
+<p class="comment">
+**Hill estimator.**
+The Hill estimator is a general procedure to estimate the tail-index of $X$, and it is given by 
 $$
 \frac{1}{\widehat{\alpha}^n} \;  := \;  \frac{1}{\widehat{\alpha}^n(k^\prime)}  := \frac{1}{k^\prime} \, \sum_{t=1}^{n} \log(X_t/X_{(k^\prime+1)})1(X_t > X_{(k^\prime +1)}),
 $$
 where $X_{(1)} \geq X_{(2)} \geq \dots \geq  X_{(n)}$ are the sorted sample records, and $k^\prime$ is a tuning parameter for the Hill estimator.
-Actually, if $X$ follows the Pareto distribution with tail index $\alpha$ then $F(t) = 1 -x^{-\alpha}$, and the strightforward calculations imply  $E[\log(X)] = 1/\alpha$. 
+<p> 
+
+
+When the temporal dependence is not very strong, think for example in a stationary AR(1) series: $(X_t = \rho X_{t-1} + Z_{t})$, for $|\rho| < 1$, and $(\mathbb{Z})$ a series of iid regularly varying innovations, the Hill estimator yields consistent estimates of the tail-index of $X$. 
+We refer to Chapter 4 in [@beirlant:goegebeur:teugels:segers:dewaal:ferro:2004] for a detailed treatment of tail-index inference.
+
+
+To motivate the Hill estimator, note that if $X$ follows the Pareto distribution with tail index $\alpha$, then $F(t) = 1 -x^{-\alpha}$, and then straightforward calculations imply  $E[\log(X)] = 1/\alpha$. 
 In all generality, the renormalized largest records of the sample follow asymptotically a Pareto distribution by means of the Pickands-Balkdema de Haan Theorem also called 'Peaks over Thresholds' Theorem. 
 This means, that if we restrict our sample to the $k^\prime$ largest records, then we see how the Hill estimator is a good candidate to estimate tail-index.
 We refer in all generality to Chapter 4 in [@beirlant:goegebeur:teugels:segers:dewaal:ferro:2004].
