@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="tsExtremes">
-<title>Tail index inference • tsExtremes</title>
+<title>Section 1: Tail-index inference • tsExtremes</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.9/font.css" rel="stylesheet">
@@ -14,7 +14,7 @@
 <link href="../deps/Roboto_Slab-0.4.9/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tail index inference">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Section 1: Tail-index inference">
 <meta property="og:description" content="tsExtremes">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -31,7 +31,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">tsExtremes</a>
 
@@ -53,8 +53,8 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/Cluster-functional-Analysis.html">Cluster inference</a>
-    <a class="dropdown-item" href="../articles/Example-Analysis.html">Tail index inference</a>
+    <a class="dropdown-item" href="../articles/Cluster-functional-Analysis.html">Section 2: Cluster inference</a>
+    <a class="dropdown-item" href="../articles/Example-Analysis.html">Section 1: Tail-index inference</a>
   </div>
 </li>
 <li class="nav-item">
@@ -84,7 +84,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Tail index inference</h1>
+      <img src="" class="logo" alt=""><h1>Section 1: Tail-index inference</h1>
                         <h4 data-toc-skip class="author">Gloria
 Buriticá</h4>
             
@@ -115,80 +115,113 @@ font-style: italic;
 <li>Review heavy-tailed random variables.</li>
 <li>Compute estimates of the tail index.</li>
 </ol>
-<p>The tail index <span class="math inline">\(\alpha &gt; 0\)</span> of
+<p>The tail-index <span class="math inline">\(\alpha &gt; 0\)</span> of
 a heavy-tailed random variable <span class="math inline">\(X\)</span> is
-associated with the magnitude of rare event. If <span class="math inline">\(\alpha\)</span> is small, high records are more
-likely to happen than if <span class="math inline">\(\alpha\)</span> is
-large.</p>
+associated with the magnitude of rare events, in this section we review
+a definition of heavy-tailed variables. The tail-index is a key
+statistic in risk assessment applications because it measures the
+magnitude of extremes. Roughly speaking, when <span class="math inline">\(\alpha\)</span> is small, the extremes are highly
+significant, and from a practical perspective, this translates to
+high-impact consequences. For example, in hydrology heavy precipitation
+amounts lead to devastating losses. To sum up, if <span class="math inline">\(\alpha\)</span> is small, extremely high records
+are more likely to happen than if <span class="math inline">\(\alpha\)</span> is large.</p>
 </div>
 <div class="section level3">
 <h3 id="heavy-tailed-random-variables">Heavy-tailed random variables<a class="anchor" aria-label="anchor" href="#heavy-tailed-random-variables"></a>
 </h3>
-In our setting, a real-valued random variable <span class="math inline">\(X\)</span> is heavy-tailed when its tail
-distribution has a polynomial decay. To state this condition formally,
-we will need the notion of regular variation.
+<p>In our setting, we consider a real-valued random variable <span class="math inline">\(X\)</span> and we say it is heavy-tailed when its
+tail distribution has a polynomial decay. To fomalize this definition we
+introduce the concept of regular variation. <br><br></p>
 <p class="comment">
-<strong>Definition.</strong> (Regular variation) A real valued random
-variable <span class="math inline">\(X\)</span> with distribution <span class="math inline">\(F\)</span> is regularly varying with
-<strong>tail-index</strong> <span class="math inline">\(\alpha &gt;
+<strong>Definition.</strong> (Regular variation) We say that a real
+valued random variable <span class="math inline">\(X\)</span> with
+distribution <span class="math inline">\(F\)</span> is regularly varying
+with <strong>tail-index</strong> <span class="math inline">\(\alpha &gt;
 0\)</span> if <span class="math inline">\(\lim_{t \to \infty}\bar
 F(tx)/\bar F(t) = x^{-\alpha},\)</span> where <span class="math inline">\(\bar F(t) := 1- F(t)\)</span> is the tail
 distribution.
 </p>
 <p>
-In the following we call heavy-tailed variables those with regularly
-varying distributions. <strong>Examples</strong> of heavy-tailed
-variables are the Pareto random variables, the Fréchet, the <span class="math inline">\(t-\)</span>student, the Burr or the log Gamma
-distribution. In comparison, light-tailed distributions include the
-exponential, the Weibull and the gaussian distribution. For these
-light-tailed examples, its tail distributions decay at an exponential
-rate. In practice this means that is very rare to record high levels
-sampling from them, and instead the values concentrate around the mean.
-For heavy-tailed random variables, the variance and the mean can
-sometimes equal infinity as we see next.
 </p>
+<p>In the following we call heavy-tailed variables those with regularly
+varying distributions.</p>
+<p><strong>Examples of heavy-tailed variables</strong> are the Pareto
+random variables, the Fréchet, the <span class="math inline">\(t-\)</span>student, the Burr or the log Gamma
+distribution.</p>
+<p><strong>Examples of light-tailed distributions</strong> include then
+the exponential, the Weibull and the gaussian distribution. For these
+light-tailed examples, its tail distributions decay at an exponential
+rate and not at a polynomial rate as for regularly varying distribution.
+In practice this means that is very rare to record high levels sampling
+from them, and instead the values concentrate around the mean.</p>
+<div class="section level4">
+<h4 id="moments-of-regularly-varying-distributions">Moments of regularly varying distributions<a class="anchor" aria-label="anchor" href="#moments-of-regularly-varying-distributions"></a>
+</h4>
+<p>In the case of regularly varying random variables, the variance and
+the mean can sometimes equal infinity. This means that sampling from
+this variable, we obtain highly scattered observations reaching higher
+records in comparison with light-tailed distributions. To see this
+consider the following samples, and its respective boxplot.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.stat.auckland.ac.nz/~yee/VGAM/" class="external-link">VGAM</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="va">n</span>     <span class="op">&lt;-</span> <span class="fl">500</span></span>
+<span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="va">sample_exponential</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html" class="external-link">rexp</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="va">sample_pareto</span>      <span class="op">&lt;-</span> <span class="fu">VGAM</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/VGAM/man/ParetoUC.html" class="external-link">rpareto</a></span><span class="op">(</span><span class="va">n</span>, shape<span class="op">=</span><span class="va">alpha</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Example-Analysis_files/figure-html/scattered%20observations%20plot-1.png" width="384" style="display: block; margin: auto;"></p>
 <p>As we already mentioned, the tail index of a heavy-tailed random
-variable plays an important role in determining the heaviness of tails.
-Moreover, if <span class="math inline">\(X\)</span> is non-negative and
-regularly varying with index <span class="math inline">\(\alpha &gt;
-0\)</span>, then for <span class="math inline">\(p &gt; \alpha\)</span>,
-<span class="math inline">\(E[X^p] = + \infty\)</span>, and for <span class="math inline">\(p &lt; \alpha\)</span>, <span class="math inline">\(E[X^p] &lt; + \infty\)</span>. In particular this
-means that for <span class="math inline">\(\alpha \in (0,2)\)</span>,
-the variance of the variable <span class="math inline">\(X\)</span> is
-infinite and for <span class="math inline">\(\alpha \in (0,1)\)</span>
-its mean is infinite. In other words, small values of <span class="math inline">\(\alpha\)</span> indicate heavier tails than larger
+variable plays an important role in determining the heaviness of
+tails.</p>
+<p><strong>Moments’ property: </strong> If <span class="math inline">\(X\)</span> is non-negative and regularly varying
+with index <span class="math inline">\(\alpha &gt; 0\)</span>, then for
+<span class="math inline">\(p &gt; \alpha\)</span>, <span class="math inline">\(E[X^p] = + \infty\)</span>, and for <span class="math inline">\(p &lt; \alpha\)</span>, <span class="math inline">\(E[X^p] &lt; + \infty\)</span>.</p>
+<p>In particular the moments’ property entails that for <span class="math inline">\(\alpha \in (0,2)\)</span>, the variance of the
+variable <span class="math inline">\(X\)</span> is infinite and for
+<span class="math inline">\(\alpha \in (0,1)\)</span> its mean is
+infinite. In other words, small values of <span class="math inline">\(\alpha\)</span> indicate heavier tails than larger
 values of <span class="math inline">\(\alpha\)</span>. For these
 reasons, estimating the tail-index of a random variable <span class="math inline">\(X\)</span> is important to quantify the magnitude
 of rare events. For a full overview on regularly varying distributions
 we refer to <span class="citation">(Bingham, Goldie, and Teugels
 1987)</span>.</p>
 </div>
+</div>
 <div class="section level3">
 <h3 id="inference-of-the-tail-index">Inference of the tail-index<a class="anchor" aria-label="anchor" href="#inference-of-the-tail-index"></a>
 </h3>
-<p>To estimate the tail-index, we consider a sample of observations
-<span class="math inline">\(X_1, \dots, X_n\)</span> with the same
+<p>In this subsection we now turn to the problem of esimating the
+tail-index from data. We consider a sample of observations <span class="math inline">\(X_1, \dots, X_n\)</span> with the same
 distribution of <span class="math inline">\(X\)</span>, and not
-necessarily independent. For weakly dependent stationary time series,
-think for example we sample from an AR(1) model, or from an independent
-series. In these case, the Hill estimator is a general procedure to
-estimate the tail-index of <span class="math inline">\(X\)</span>, and
-it is given by <span class="math display">\[
+necessarily independent.</p>
+<p class="comment">
+<strong>Hill estimator.</strong> The Hill estimator is a general
+procedure to estimate the tail-index of <span class="math inline">\(X\)</span>, and it is given by <span class="math display">\[
 \frac{1}{\widehat{\alpha}^n} \;  :=
 \;  \frac{1}{\widehat{\alpha}^n(k^\prime)}  := \frac{1}{k^\prime} \,
 \sum_{t=1}^{n} \log(X_t/X_{(k^\prime+1)})1(X_t &gt; X_{(k^\prime +1)}),
 \]</span> where <span class="math inline">\(X_{(1)} \geq X_{(2)} \geq
 \dots \geq  X_{(n)}\)</span> are the sorted sample records, and <span class="math inline">\(k^\prime\)</span> is a tuning parameter for the
-Hill estimator. Actually, if <span class="math inline">\(X\)</span>
-follows the Pareto distribution with tail index <span class="math inline">\(\alpha\)</span> then <span class="math inline">\(F(t) = 1 -x^{-\alpha}\)</span>, and the
-strightforward calculations imply <span class="math inline">\(E[\log(X)]
-= 1/\alpha\)</span>. In all generality, the renormalized largest records
-of the sample follow asymptotically a Pareto distribution by means of
-the Pickands-Balkdema de Haan Theorem also called ‘Peaks over
-Thresholds’ Theorem. This means, that if we restrict our sample to the
-<span class="math inline">\(k^\prime\)</span> largest records, then we
-see how the Hill estimator is a good candidate to estimate tail-index.
-We refer in all generality to Chapter 4 in <span class="citation">(Beirlant et al. 2004)</span>.</p>
+Hill estimator.
+</p>
+<p>
+</p>
+<p>When the temporal dependence is not very strong, think for example in
+a stationary AR(1) series: <span class="math inline">\((X_t = \rho
+X_{t-1} + Z_{t})\)</span>, for <span class="math inline">\(|\rho| &lt;
+1\)</span>, and <span class="math inline">\((\mathbb{Z})\)</span> a
+series of iid regularly varying innovations, the Hill estimator yields
+consistent estimates of the tail-index of <span class="math inline">\(X\)</span>. We refer to Chapter 4 in <span class="citation">(Beirlant et al. 2004)</span> for a detailed treatment
+of tail-index inference.</p>
+<p>To motivate the Hill estimator, note that if <span class="math inline">\(X\)</span> follows the Pareto distribution with
+tail index <span class="math inline">\(\alpha\)</span>, then <span class="math inline">\(F(t) = 1 -x^{-\alpha}\)</span>, and then
+straightforward calculations imply <span class="math inline">\(E[\log(X)] = 1/\alpha\)</span>. In all generality,
+the renormalized largest records of the sample follow asymptotically a
+Pareto distribution by means of the Pickands-Balkdema de Haan Theorem
+also called ‘Peaks over Thresholds’ Theorem. This means, that if we
+restrict our sample to the <span class="math inline">\(k^\prime\)</span>
+largest records, then we see how the Hill estimator is a good candidate
+to estimate tail-index. We refer in all generality to Chapter 4 in <span class="citation">(Beirlant et al. 2004)</span>.</p>
 </div>
 <div class="section level3">
 <h3 id="tsextremes-package-implementation">tsExtremes package implementation<a class="anchor" aria-label="anchor" href="#tsextremes-package-implementation"></a>
@@ -196,14 +229,14 @@ We refer in all generality to Chapter 4 in <span class="citation">(Beirlant et a
 <p>To implement the Hill estimator with the tsExtremes package, we start
 by loading the <span class="math inline">\(\texttt{tsExtremes}\)</span>
 package.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GBuritica/tsExtremes" class="external-link">tsExtremes</a></span><span class="op">)</span></span></code></pre></div>
 <p>The <span class="math inline">\(\texttt{tsExtremes}\)</span> package
 includes the rainfall dataset, containing daily rainfall records from
 nine different weather stations in France. The data and season of each
 record is available. To compute the tail-index and produce a Hill Plot
 of summer rainfall in Brest we use the function below.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/alphaestimator.html">alphaestimator</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">$</span><span class="va">BREST</span><span class="op">[</span><span class="va">rainfall</span><span class="op">$</span><span class="va">SEASON</span><span class="op">==</span><span class="st">"SPRING"</span><span class="op">]</span>, plot<span class="op">=</span><span class="cn">F</span> , R0 <span class="op">=</span> <span class="fl">100</span>,  hill<span class="op">=</span><span class="cn">T</span> ,  k1 <span class="op">=</span> <span class="fl">300</span> <span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2 unnumbered">
@@ -234,7 +267,7 @@ Variation</em>. Cambridge: Cambridge University Press.
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer>
