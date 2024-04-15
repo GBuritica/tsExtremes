@@ -165,6 +165,7 @@ consider the following samples, and its respective boxplot.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.stat.auckland.ac.nz/~yee/VGAM/" class="external-link">VGAM</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">n</span>     <span class="op">&lt;-</span> <span class="fl">500</span></span>
 <span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
 <span><span class="va">sample_exponential</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html" class="external-link">rexp</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
@@ -194,6 +195,33 @@ we refer to <span class="citation">(Bingham, Goldie, and Teugels
 tail-index from data. We consider a sample of observations <span class="math inline">\(X_1, \dots, X_n\)</span> with the same
 distribution of <span class="math inline">\(X\)</span>, and not
 necessarily independent.</p>
+<div class="section level4">
+<h4 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
+</h4>
+<p>To motivate the Hill estimator, note that when <span class="math inline">\(P\)</span> follows the Pareto distribution with
+tail index <span class="math inline">\(\alpha\)</span>, then <span class="math inline">\(\mathbb{P}(Y &gt; x) = 1 -x^{-\alpha}\)</span>,
+and then straightforward calculations imply <span class="math display">\[E[\log(P)] = \frac{1}{\alpha}.\]</span> In all
+generality, when <span class="math inline">\(X\)</span> is regularly
+varying, then for all <span class="math inline">\(x &gt; 1\)</span>,
+<span class="math display">\[
+\lim_{t \to \infty}\mathbb{P}(X/t &gt; x \mid X &gt; t) = \lim_{t \to
+\infty} {\overline F(tx)}/{\overline F(t) } = x^{-\alpha}.
+\]</span> where the last equality follows by the definition of regularly
+varying random variables. We can interpret this equation to say that the
+renormalized sample exceeded amount follows asymptotically a Pareto
+distribution. In this sense <span class="math display">\[\mathbb{E}[
+\log(X/t) | X &gt; t] \approx \frac{1}{\alpha}, \qquad t \to \infty.
+\]</span> Finally, replacing the right-hand side in the previous
+relation with its empirical counterpart yields <span class="math display">\[
+\frac{ \sum_{j=1}^n \log(X_j/t)1(X_j &gt; t)}{\sum_{j=1}^n 1(X_j&gt; t)}
+\approx \frac{1}{\alpha}, \qquad t \to \infty.
+\]</span></p>
+<p>Here the value of <span class="math inline">\(t\)</span> is a high
+threshold of the sample. In our case, we replace <span class="math inline">\(t\)</span> by an order statistic of the sample. If
+<span class="math inline">\(X_{(1)} \geq X_{(2)} \geq \cdots \geq
+X_{(n)}\)</span> are the sorted sample values, then we see that letting
+<span class="math inline">\(t = X_{(k^\prime+1)}\)</span> is the
+previous expression we obtain the Hill estimator</p>
 <p class="comment">
 <strong>Hill estimator.</strong> The Hill estimator is a general
 procedure to estimate the tail-index of <span class="math inline">\(X\)</span>, and it is given by <span class="math display">\[
@@ -206,37 +234,83 @@ Hill estimator.
 </p>
 <p>
 </p>
-<p>When the temporal dependence is not very strong, think for example in
-a stationary AR(1) series: <span class="math inline">\((X_t = \rho
-X_{t-1} + Z_{t})\)</span>, for <span class="math inline">\(|\rho| &lt;
+<p>We see from the previous expression that the assumption of regular
+variation means that the top records from the sample: <span class="math inline">\(X_{(1)} \geq \cdots \geq X_{(k^\prime)}\)</span>,
+resemble a sample from a Pareto distribution with tail-index <span class="math inline">\(\alpha &gt; 0\)</span>.</p>
+<p>Finally, the Hill estimator yields consistent estimates of the
+tail-index of <span class="math inline">\(X\)</span> even when the
+temporal dependence is not very strong, think for example in a
+stationary AR(1) series: <span class="math inline">\(X_t = \rho X_{t-1}
++ Z_{t}\)</span>, for <span class="math inline">\(|\rho| &lt;
 1\)</span>, and <span class="math inline">\((\mathbb{Z})\)</span> a
-series of iid regularly varying innovations, the Hill estimator yields
-consistent estimates of the tail-index of <span class="math inline">\(X\)</span>. We refer to Chapter 4 in <span class="citation">(Beirlant et al. 2004)</span> for a detailed treatment
-of tail-index inference.</p>
-<p>To motivate the Hill estimator, note that if <span class="math inline">\(X\)</span> follows the Pareto distribution with
-tail index <span class="math inline">\(\alpha\)</span>, then <span class="math inline">\(F(t) = 1 -x^{-\alpha}\)</span>, and then
-straightforward calculations imply <span class="math inline">\(E[\log(X)] = 1/\alpha\)</span>. In all generality,
-the renormalized largest records of the sample follow asymptotically a
-Pareto distribution by means of the Pickands-Balkdema de Haan Theorem
-also called ‘Peaks over Thresholds’ Theorem. This means, that if we
-restrict our sample to the <span class="math inline">\(k^\prime\)</span>
-largest records, then we see how the Hill estimator is a good candidate
-to estimate tail-index. We refer in all generality to Chapter 4 in <span class="citation">(Beirlant et al. 2004)</span>.</p>
+series of iid regularly varying innovations. We refer to Chapter 4 in
+<span class="citation">(Beirlant et al. 2004)</span> for a detailed
+treatment of tail-index inference.</p>
+</div>
+<div class="section level4">
+<h4 id="bias-variance-trade-off">Bias-Variance trade-off<a class="anchor" aria-label="anchor" href="#bias-variance-trade-off"></a>
+</h4>
+<p>The Hill estimator requires the tuning parameter <span class="math inline">\(k^\prime\)</span> in its implementation, and this
+choice highlights the classical bias-variance trade-off in extreme value
+statistics. Larger values of <span class="math inline">\(k^\prime\)</span> mean that when we average a
+larger number of sample records to compute the Hill estimate, which
+typically translates in a variance reduction for this statistical
+procedure. Nevertheless, to obtain unbiased estimates of the tail-index
+it is important that our top records: <span class="math inline">\(X_{(1)} \geq \cdots \geq X_{(k^\prime)}\)</span>
+nicely resemble a sample from a Pareto distribution with tail-index
+<span class="math inline">\(\alpha\)</span>. However, in all generality
+this is only granted in many cases if <span class="math inline">\(k^\prime = k_n^\prime\)</span> is rather small
+compared to <span class="math inline">\(n\)</span>, which means we can
+only focus on the top records.</p>
+<p><strong>qq-plot</strong> : To illustrate the bias-variance trade-off,
+let’s take again <span class="math inline">\(P\)</span> to be a Pareto
+distribution. Moreover notice that for all <span class="math inline">\(p
+\in (0,1)\)</span>, the quantiles of <span class="math inline">\(\log
+P\)</span> can be computed noticing <span class="math inline">\(\mathbb{P}(\log(P) &gt;  - \log(p)/\alpha ) =
+\mathbb{P}(P &gt; p^{-1/\alpha} ) = p.\)</span> This equation
+demonstrates that the qq-plot of sample from <span class="math inline">\(\log(P)\)</span> is given by the points <span class="math display">\[ (\log(P_{(k)}),-\log(1-k/n)/\alpha),\]</span>
+where again recall the notation <span class="math inline">\(P_{(1)} \geq
+\cdots P_{(n)}\)</span>. Instead, for a general regularly varying
+variables <span class="math inline">\(X\)</span>, when we plot <span class="math inline">\((\log(X_{(k)}),-\log(1-k/n)/\alpha))\)</span>,
+then only the highest records of the sample should align with the
+quantiles of <span class="math inline">\(\log P\)</span>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/ggpubr/" class="external-link">ggpubr</a></span><span class="op">)</span></span>
+<span><span class="va">sample_frechet</span>     <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VGAM/man/frechetUC.html" class="external-link">rfrechet</a></span><span class="op">(</span><span class="va">n</span>, shape <span class="op">=</span> <span class="va">alpha</span><span class="op">)</span></span>
+<span><span class="va">sample_pareto</span>      <span class="op">&lt;-</span> <span class="fu">VGAM</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/VGAM/man/ParetoUC.html" class="external-link">rpareto</a></span><span class="op">(</span><span class="va">n</span>, shape<span class="op">=</span><span class="va">alpha</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">'log_frechet'</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">sample_frechet</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>                  <span class="st">'log_pareto'</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">sample_pareto</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span> y <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">/</span><span class="va">n</span><span class="op">)</span><span class="op">/</span><span class="va">alpha</span>, x <span class="op">=</span> <span class="va">log_pareto</span> <span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>slope<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span> y <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">/</span><span class="va">n</span><span class="op">)</span><span class="op">/</span><span class="va">alpha</span>, x <span class="op">=</span> <span class="va">log_frechet</span> <span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>slope<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html" class="external-link">ggarrange</a></span><span class="op">(</span><span class="va">g1</span>,<span class="va">g2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Example-Analysis_files/figure-html/qqplot-1.png" width="576" style="display: block; margin: auto;"></p>
+<p>Finally, as expected we can see from the plot above that when <span class="math inline">\(X\)</span> follows the Fréchet distributions, then
+only the <span class="math inline">\(k^\prime\)</span>-largest sample
+records can be accurately modeled using a Pareto distribution. From this
+plot we take that in this case we need to choose <span class="math inline">\(k^\prime = k_n^\prime\)</span> from the Hill
+estimator rather small compared to <span class="math inline">\(n\)</span> to satisfactorily describe the tail
+properties of the variable <span class="math inline">\(X\)</span>.</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="tsextremes-package-implementation">tsExtremes package implementation<a class="anchor" aria-label="anchor" href="#tsextremes-package-implementation"></a>
 </h3>
-<p>To implement the Hill estimator with the tsExtremes package, we start
-by loading the <span class="math inline">\(\texttt{tsExtremes}\)</span>
-package.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>We are now ready to use the tsExtremes package to compute Hill
+estimates of the tail-index. We start by loading the <span class="math inline">\(\texttt{tsExtremes}\)</span> package.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GBuritica/tsExtremes" class="external-link">tsExtremes</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hillestimator.html">hillestimator</a></span><span class="op">(</span><span class="va">sample_pareto</span>, plot<span class="op">=</span><span class="cn">T</span> , k1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span> <span class="op">)</span></span></code></pre></div>
+<p><img src="Example-Analysis_files/figure-html/unbiased-hill-1.png" width="864" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hillestimator.html">hillestimator</a></span><span class="op">(</span><span class="va">sample_frechet</span>, plot<span class="op">=</span><span class="cn">T</span> , k1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span> <span class="op">)</span></span></code></pre></div>
+<p><img src="Example-Analysis_files/figure-html/unbiased-hill-2.png" width="864" style="display: block; margin: auto;"></p>
 <p>The <span class="math inline">\(\texttt{tsExtremes}\)</span> package
 includes the rainfall dataset, containing daily rainfall records from
 nine different weather stations in France. The data and season of each
 record is available. To compute the tail-index and produce a Hill Plot
 of summer rainfall in Brest we use the function below.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/alphaestimator.html">alphaestimator</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">$</span><span class="va">BREST</span><span class="op">[</span><span class="va">rainfall</span><span class="op">$</span><span class="va">SEASON</span><span class="op">==</span><span class="st">"SPRING"</span><span class="op">]</span>, plot<span class="op">=</span><span class="cn">F</span> , R0 <span class="op">=</span> <span class="fl">100</span>,  hill<span class="op">=</span><span class="cn">T</span> ,  k1 <span class="op">=</span> <span class="fl">300</span> <span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2 unnumbered">
