@@ -10,9 +10,9 @@
 #' @export
 #'
 #' @examples
-#' hillestimator(rainfall$LANVEOC[rainfall$SEASON=='SPRING'], 1:200)
-#' hillestimator(rainfall$LANVEOC[rainfall$SEASON=='SPRING'], plot=T)
-
+#' h <- hillestimator(rainfall$LANVEOC[rainfall$SEASON=='SPRING'], 1:200)
+#' h <- hillestimator(rainfall$LANVEOC[rainfall$SEASON=='SPRING'], plot=T)
+#
 hillestimator <- function(path, k1=NULL, plot=F){
   n      <- length(path)
   if(is.null(k1)){
