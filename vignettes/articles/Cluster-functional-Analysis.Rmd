@@ -6,9 +6,9 @@ bibliography: "references.bib"
 ---
 
 
-<style>
-p.comment {
-background-color: #DCDCDC;
+<<style>
+p.comment{
+background-color: #E3E7F1;
 padding: 10px;
 border: 1px solid black;
 margin-left: 25px;
@@ -25,14 +25,42 @@ knitr::opts_chunk$set(
 )
 ```
 
-In the vignette Tail index inference, you learnt how to estimate the tail-index of a distribution from a sample identically distributed random variables.
-We now focus on analyzing the time dependencies of our data.
-In this tutorial you will learn how to estimate the extremal index and further cluster statistics of the series.
+### Main goals of this tutorial
+  1. Review heavy-tailed time series variables.
+  2. Review the extremal index and cluster statistics.
+  2. Compute estimates of cluster statistics.
+
+
+Previously you learnt how to estimate the tail-index of a regularly varying random variable $X$, which quantifies the magnitude of extremes.
+In this section we consider heavy-tailed time series $(X_t)$, and we focus on studying the dependence structure of extremes. 
+The main question that we would like to answer is how one extreme record can trigger future heavy records. 
+
+### Heavy-tailed random vectors
+ 
+We now consider an $\mathbb{R}^d$-valued time series $(X_t)$ and we characterize next heavy-tailed series by means on the notion of multivariate regular variation. 
+<br>
+<br>
+
+<p class="comment">
+**Definition.** (Regular variation)
+We say that an $\mathbb{R}^d$-valued stationary series $(X_t)$ is regularly varying with **tail-index** $\alpha > 0$ if for all $h > 0$,  the vector $(X_0,X_1,\dots,X_h)$ satisfies multivariate regular variation: there exists $(\Theta_t)$ such that, for $y > 1$,
+\[
+\mathbb{P}( x^{-1}|X_0| > y,  |X_0|^{-1}(X_t)_{t=-h,\dots,h} \in \cdot \mid |X_0| > x  ) \to y^{-\alpha}\mathbb{P}((\Theta_t)_{t=-h,\dots,h} \in \cdot ),
+\]
+as $x \to \infty$, and $|\Theta_0| = 1$. The process $(\Theta_t)$ is called the **spectral-tail** process of the series. 
+<p>
+
+The spectral-tail process plays an important role in the understanding of the space and time dependencies of the extremes of the series. It measures the impact of one extreme record at time zero on the future behavior of the series. 
+Moreover, we see next that many common time series lie within the framework of heavy-tailed time series. 
+
+__Examples of heavy-tailed time series__ include linear filters with regularly varying innovations, and also GARCH models. These examples are discussed in all generality in [@kulik:soulier:2020].
+
+
 
 ### Extremal index
 
 
-The extremal index is motivated by the findings in (Newell, 1964), (Leadbetter, 1983), and (Leadbetter *et al.*, 1983), who discovered that for numerous real-valued stationary sequences $(X_t)$, 
+The extremal index of a stationary time series was motivated by the findings in (Newell, 1964), (Leadbetter, 1983), and (Leadbetter *et al.*, 1983), who discovered that for numerous real-valued stationary sequences $(X_t)$, 
 $$
 Pr \left( \max_{t=1,\dots,n} |X_t| \le u_n \right) \; \approx \; \Big[ Pr( X_1 \le u_n) \Big]^{n \theta_X} \; = \; Pr \left( \max_{t=1,\dots,n} |X^\prime_t| \le u_n \right)^{\theta_X}, \quad n \to \infty,
 $$
@@ -130,3 +158,8 @@ path         <- rainfall$BREST[rainfall$SEASON=="SPRING"]
 alphae       <- 1/alphaestimator(path,k1=150)$xi 
 estimate     <- piCP(path,alphae,plot=T) 
 ```
+
+
+
+## References
+
