@@ -1,5 +1,5 @@
 ---
-title: "Cluster inference"
+title: "Section 2: Cluster inference"
 author: Gloria Buriticá
 geometry: margin=3cm
 bibliography: "references.bib"
