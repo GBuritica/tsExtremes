@@ -13,11 +13,9 @@ devtools::document()   ## To update documentation
 devtools::build()      ## To built again the package
 
 Todo : 
-Comment on choice of k for the Hill estimator. 
-Comment on bias/unbiased estimator.
-Edit the cluster file. 
-Check if the sidebar is ok.
-Put the Hill estimator in a definition box. 
+
+Comment on choice of $k$ for cluster statistics.
+Fix references. 
 
 
 For the student code, integrate the automatic threshold selection with our code. It would be nice to comment on this. 
