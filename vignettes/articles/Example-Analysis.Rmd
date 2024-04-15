@@ -61,6 +61,7 @@ In the case of regularly varying random variables, the variance and the mean can
 ```{r scattered observations, echo = T, message=F, fig.height = 2, fig.width = 4, fig.align = "center"}
 library(VGAM)
 library(ggplot2)
+set.seed(123)
 n     <- 500
 alpha <- 2
 sample_exponential <- 1 + rexp(n)
@@ -94,6 +95,25 @@ For a full overview on regularly varying distributions we refer to  [@bingham:go
 In this subsection we now turn to the problem of esimating the tail-index from data.
 We consider a sample of observations $X_1, \dots, X_n$ with the same distribution of $X$, and not necessarily independent.
 
+
+#### Motivation
+
+To motivate the Hill estimator, note that when $P$ follows the Pareto distribution with tail index $\alpha$, then $\mathbb{P}(Y > x) = 1 -x^{-\alpha}$, and then straightforward calculations imply  $$E[\log(P)] = \frac{1}{\alpha}.$$
+In all generality, when $X$ is regularly varying, then for all $x > 1$,
+$$
+\lim_{t \to \infty}\mathbb{P}(X/t > x \mid X > t) = \lim_{t \to \infty} {\overline F(tx)}/{\overline F(t) } = x^{-\alpha}.
+$$
+where the last equality follows by the definition of regularly varying random variables. 
+We can interpret this equation to say that the renormalized sample exceeded amount follows asymptotically a Pareto distribution. 
+In this sense 
+ $$\mathbb{E}[ \log(X/t) | X > t] \approx \frac{1}{\alpha}, \qquad t \to \infty. $$
+Finally, replacing the right-hand side in the previous relation with its empirical counterpart yields 
+$$
+\frac{ \sum_{j=1}^n \log(X_j/t)1(X_j > t)}{\sum_{j=1}^n 1(X_j> t)} \approx \frac{1}{\alpha}, \qquad t \to \infty.
+$$
+
+Here the value of $t$ is a high threshold of the sample. In our case, we replace $t$ by an order statistic of the sample. If $X_{(1)} \geq X_{(2)} \geq \cdots \geq X_{(n)}$ are the sorted sample values, then we see that letting $t = X_{(k^\prime+1)}$ is the previous expression we obtain the Hill estimator 
+
 <p class="comment">
 **Hill estimator.**
 The Hill estimator is a general procedure to estimate the tail-index of $X$, and it is given by 
@@ -103,30 +123,67 @@ $$
 where $X_{(1)} \geq X_{(2)} \geq \dots \geq  X_{(n)}$ are the sorted sample records, and $k^\prime$ is a tuning parameter for the Hill estimator.
 <p> 
 
+We see from the previous expression that the assumption of regular variation means that the top records from the sample: $X_{(1)} \geq \cdots \geq X_{(k^\prime)}$, resemble a sample from a Pareto distribution with tail-index $\alpha > 0$. 
 
-When the temporal dependence is not very strong, think for example in a stationary AR(1) series: $(X_t = \rho X_{t-1} + Z_{t})$, for $|\rho| < 1$, and $(\mathbb{Z})$ a series of iid regularly varying innovations, the Hill estimator yields consistent estimates of the tail-index of $X$. 
+
+Finally, the Hill estimator yields consistent estimates of the tail-index of $X$ even
+when the temporal dependence is not very strong, think for example in a stationary AR(1) series: $X_t = \rho X_{t-1} + Z_{t}$, for $|\rho| < 1$, and $(\mathbb{Z})$ a series of iid regularly varying innovations.
 We refer to Chapter 4 in [@beirlant:goegebeur:teugels:segers:dewaal:ferro:2004] for a detailed treatment of tail-index inference.
 
+#### Bias-Variance trade-off
 
-To motivate the Hill estimator, note that if $X$ follows the Pareto distribution with tail index $\alpha$, then $F(t) = 1 -x^{-\alpha}$, and then straightforward calculations imply  $E[\log(X)] = 1/\alpha$. 
-In all generality, the renormalized largest records of the sample follow asymptotically a Pareto distribution by means of the Pickands-Balkdema de Haan Theorem also called 'Peaks over Thresholds' Theorem. 
-This means, that if we restrict our sample to the $k^\prime$ largest records, then we see how the Hill estimator is a good candidate to estimate tail-index.
-We refer in all generality to Chapter 4 in [@beirlant:goegebeur:teugels:segers:dewaal:ferro:2004].
+The Hill estimator requires the tuning parameter $k^\prime$ in its implementation,
+and this choice highlights the classical bias-variance trade-off in extreme value statistics.
+Larger values of $k^\prime$ mean that when we average a larger number of sample records to compute the Hill estimate, which typically translates in a variance reduction for this statistical procedure. 
+Nevertheless, to obtain unbiased estimates of the tail-index it is important that our top records: $X_{(1)} \geq \cdots \geq X_{(k^\prime)}$ nicely resemble a sample from a Pareto distribution with tail-index $\alpha$. 
+However, in all generality this is only granted in many cases if $k^\prime = k_n^\prime$ is rather small compared to $n$, which means we can only focus on the top records.
+
+
+__qq-plot__ : To illustrate the bias-variance trade-off, let's take again $P$ to be a Pareto distribution.
+Moreover notice that for all $p \in (0,1)$, the quantiles of $\log P$ can be computed noticing $\mathbb{P}(\log(P) >  - \log(p)/\alpha ) = \mathbb{P}(P > p^{-1/\alpha} ) = p.$
+This equation demonstrates that the qq-plot of sample from $\log(P)$ is given by the points 
+\[ (\log(P_{(k)}),-\log(1-k/n)/\alpha),\]
+where again recall the notation $P_{(1)} \geq \cdots P_{(n)}$. 
+Instead, for a general regularly varying variables $X$, when we plot $(\log(X_{(k)}),-\log(1-k/n)/\alpha))$, then
+only the highest records of the sample should align with the quantiles of $\log P$.
+
+
+
+```{r qqplot, echo = T, message=F, fig.height = 3, fig.width = 6, fig.align = "center"}
+library(ggpubr)
+sample_frechet     <- rfrechet(n, shape = alpha)
+sample_pareto      <- VGAM::rpareto(n, shape=alpha)
+df <- data.frame('log_frechet' = log(sort(sample_frechet)), 
+                  'log_pareto' = log(sort(sample_pareto)))
+g1 <- ggplot(df) + geom_point(aes( y = -log(1-1:n/n)/alpha, x = log_pareto )) + geom_abline(slope=1)
+g2 <- ggplot(df) + geom_point(aes( y = -log(1-1:n/n)/alpha, x = log_frechet )) + geom_abline(slope=1)
+ggarrange(g1,g2)
+```
+
+Finally, as expected we can see from the plot above that when $X$ follows the Fréchet distributions, then only the $k^\prime$-largest sample records can be accurately modeled using a Pareto distribution. 
+From this plot we take that in this case we need to choose $k^\prime = k_n^\prime$ from the Hill estimator rather small compared to $n$ to satisfactorily describe the tail properties of the variable $X$. 
 
 ### tsExtremes package implementation
 \par 
-To implement the Hill estimator with the tsExtremes package,  we start by loading the $\texttt{tsExtremes}$ package.
+
+We are now ready to use the tsExtremes package to compute Hill estimates of the tail-index. We start by loading the $\texttt{tsExtremes}$ package.
 
 ```{r setup}
 library(tsExtremes)
 ```
+
+```{r unbiased-hill, fig.height = 4, fig.width = 9, fig.align = "center"}
+h <- hillestimator(sample_pareto, plot=T , k1 = 1:n )
+h <- hillestimator(sample_frechet, plot=T , k1 = 1:n )
+```
+
 
 
 The $\texttt{tsExtremes}$ package includes the rainfall dataset, containing daily rainfall records from nine different weather stations in France. The data and season of each record is available. To compute the tail-index and produce a Hill Plot of summer rainfall in Brest we use the function below.
 
 
 
-```{r unbiased-hill, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
+```{r unbiased-hill-data, echo = T,fig.height = 4, fig.width = 9, fig.align = "center"}
 h <- alphaestimator(rainfall$BREST[rainfall$SEASON=="SPRING"], plot=F , R0 = 100,  hill=T ,  k1 = 300 )
 ```
 
