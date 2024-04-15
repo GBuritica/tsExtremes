@@ -19,7 +19,8 @@ Imports:
    evd, 
    fExtremes,
    ExtDist,
-   boot  	
+   boot, 
+   VGAM  	
 Suggests:
     boot,
     knitr,
