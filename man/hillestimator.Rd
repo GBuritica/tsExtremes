@@ -21,6 +21,6 @@ A data.frame of hill estimates as a function of k.
 This function computes Hill (tail)-index estimate of a stationary time series.
 }
 \examples{
-hillestimator(rainfall$LANVEOC[rainfall$SEASON=='SPRING'], 1:200)
-hillestimator(rainfall$LANVEOC[rainfall$SEASON=='SPRING'], plot=T)
+h <- hillestimator(rainfall$LANVEOC[rainfall$SEASON=='SPRING'], 1:200)
+h <- hillestimator(rainfall$LANVEOC[rainfall$SEASON=='SPRING'], plot=T)
 }
