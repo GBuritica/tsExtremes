@@ -7,6 +7,11 @@ Protocol : open package, run build_site() and commit changes or run directly bui
 https://psyteachr.github.io/intro-r-pkgs/08-maintenance.html
 
 
+### Update documentation 
+Ctr + Shift + D
+devtools::document()   ## To update documentation
+devtools::build()      ## To built again the package
+
 Todo : 
 Comment on choice of k for the Hill estimator. 
 Comment on bias/unbiased estimator.
