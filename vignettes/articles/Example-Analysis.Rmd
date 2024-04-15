@@ -59,8 +59,8 @@ __Examples of light-tailed distributions__ include then the exponential, the Wei
 In the case of regularly varying random variables, the variance and the mean can sometimes equal infinity. This means that sampling from this variable, we obtain highly scattered observations in comparison with light-tailed distributions. To see this consider the following sample, and its respective boxplot.
 
 ```{r scattered observations, echo = T, message=F, fig.height = 2, fig.width = 4, fig.align = "center"}
-require(VGAM)
-require(ggplot2)
+library(VGAM)
+library(ggplot2)
 n     <- 1000
 alpha <- 2
 sample_exponential <- 1 + rexp(n)
