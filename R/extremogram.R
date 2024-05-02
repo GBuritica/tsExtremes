@@ -12,6 +12,8 @@
 #'
 #' @return A numerical vector with the same number of columns as `mat`
 #'
+#' @export
+#'
 #' @examples
 #' x <- rbind( c(1,2), c(1,1) )
 #' rmax(x)
@@ -28,6 +30,7 @@ rmax <- function(mat){
 #' @param plot A logical value to plot the results
 #'
 #' @return A vector with the extremogram values
+#' @export
 #'
 #' @examples
 #' pre    <- tsExtremes::rainfall ## load rainfall data
