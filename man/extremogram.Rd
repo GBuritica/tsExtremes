@@ -23,9 +23,9 @@ Empirical temporal extremogram
 }
 \details{
 The temporal extremogram \eqn{\chi_t} is defined by
-\deqn{\chi_t = \lim_{t \to \infty} \mathbb{P}(|X_t| > x | |X_0| > x).}
+\deqn{\chi_t = \lim_{t \to \infty} \mathbb{P}( X_t > x | X_0 > x).}
 Its empirical version, computes the average number of exceedances of the q-th order statistic.
-As a baseline, the extremogram takes the value of $1-q$ at independent lags.
+As a baseline, the extremogram takes the value of 1-q at independent lags.
 }
 \examples{
 pre    <- tsExtremes::rainfall ## load rainfall data
