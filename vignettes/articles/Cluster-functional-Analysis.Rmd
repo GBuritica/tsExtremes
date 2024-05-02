@@ -6,7 +6,7 @@ bibliography: "references.bib"
 ---
 
 
-<<style>
+<style>
 p.comment{
 background-color: #E3E7F1;
 padding: 10px;
@@ -32,12 +32,14 @@ knitr::opts_chunk$set(
 
 
 Previously you learnt how to estimate the tail-index of a regularly varying random variable $X$, which quantifies the magnitude of extremes.
-In this section we consider heavy-tailed time series $(X_t)$, and we focus on studying the dependence structure of extremes. 
+In this section we consider heavy-tailed time series $(X_t)$ taking values in $\mathbb{R}^d$, and we focus on studying the dependence structure of extremes. 
 The main question that we would like to answer is how one extreme record can trigger future heavy records. 
 
-### Heavy-tailed random vectors
- 
-We now consider an $\mathbb{R}^d$-valued time series $(X_t)$ and we characterize next heavy-tailed series by means on the notion of multivariate regular variation. 
+### Heavy-tailed time series
+
+
+#### Regularly varying time series  
+We now consider an $\mathbb{R}^d$-valued time series $(X_t)$ and we characterize next heavy-tailed series by means of the notion of multivariate regular variation. 
 <br>
 <br>
 
@@ -50,12 +52,23 @@ We say that an $\mathbb{R}^d$-valued stationary series $(X_t)$ is regularly vary
 as $x \to \infty$, and $|\Theta_0| = 1$. The process $(\Theta_t)$ is called the **spectral-tail** process of the series. 
 <p>
 
-The spectral-tail process plays an important role in the understanding of the space and time dependencies of the extremes of the series. It measures the impact of one extreme record at time zero on the future behavior of the series. 
+The spectral-tail process plays an important role in the understanding of the space and time dependencies of the extremes of the series. It measures the impact of one extreme record at time zero on the future behavior of the series over finite windows of time. 
+
+__Auto-regressive heavy-tailed time series__ 
+
+One first example of a regularly varying time series are ARMA processes with heavy-tailed innovations. 
+Consider $(Z_t)$ a sequence of iid innovations admitting a regularly varying distribution with tail index $\alpha > 0$. 
+$$
+X_t = \varphi X_{t-1} + Z_t
+$$
+
 Moreover, we see next that many common time series lie within the framework of heavy-tailed time series. 
 
-__Examples of heavy-tailed time series__ include linear filters with regularly varying innovations, and also GARCH models. These examples are discussed in all generality in [@kulik:soulier:2020].
+__Further examples of heavy-tailed time series__ include linear filters with regularly varying innovations, and also GARCH models. These examples are discussed in all generality in [@kulik:soulier:2020].
 
+#### Weak extremal temporal dependence
 
+It is common that the impact of one extreme record at time zero decays over time. In this case, we are in the setting of weak extremal temporal dependence. 
 
 ### Extremal index
 
