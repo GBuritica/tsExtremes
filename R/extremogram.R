@@ -58,7 +58,7 @@ ext    <- function(sample, maxlag=10, q){
 extremogram <- function(sample,maxlag=45,q=.95,plot=T){
   sorted <- sort(sample,decreasing=T)
   quant  <- sorted[floor(n*(1-q))]
-  extremo <- ext(sample, maxlag, q=quant)
+  extremo <- tsExtremes::ext(sample, maxlag, q=quant)
   if(plot){
     plot(x=NULL,y=NULL, xlim = c(1,maxlag),
          ylim = c(0,max(0.6,max(extremo)) ), xlab = "time lag",
