@@ -21,6 +21,18 @@ rmax <- function(mat){
   apply(mat, 1, function(x) max(x) )
 }
 
+#' Extremogram auxiliar function
+#'
+#' @param sample A vector
+#' @param maxlag An integer
+#' @param q A quantile value in $(0,1)$
+#'
+#' @return A vector with the extremogram output
+#'
+
+ext    <- function(sample, maxlag=10, q){
+  sapply( 1:maxlag, function(k) mean( sample[ (which(sample > q) + k) ] > q , na.rm = T) )
+}
 
 #' Empirical temporal extremogram
 #'
@@ -43,11 +55,9 @@ rmax <- function(mat){
 #' \deqn{\chi_t = \lim_{t \to \infty} \mathbb{P}( X_t > x | X_0 > x).}
 #' Its empirical version, computes the average number of exceedances of the q-th order statistic.
 #' As a baseline, the extremogram takes the value of 1-q at independent lags.
-
 extremogram <- function(sample,maxlag=45,q=.95,plot=T){
   sorted <- sort(sample,decreasing=T)
   quant  <- sorted[floor(n*(1-q))]
-  ext    <- function(sample, maxlag=10, q) sapply( 1:maxlag, function(k) mean( sample[ (which(sample > q) + k) ] > q , na.rm = T) )
   extremo <- ext(sample, maxlag, q=quant)
   if(plot){
     plot(x=NULL,y=NULL, xlim = c(1,maxlag),
