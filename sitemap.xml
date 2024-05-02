@@ -46,6 +46,9 @@
     <loc>https://gburitica.github.io/tsExtremes/reference/eiCP.html</loc>
   </url>
   <url>
+    <loc>https://gburitica.github.io/tsExtremes/reference/extremogram.html</loc>
+  </url>
+  <url>
     <loc>https://gburitica.github.io/tsExtremes/reference/functionalCP.html</loc>
   </url>
   <url>
@@ -59,5 +62,8 @@
   </url>
   <url>
     <loc>https://gburitica.github.io/tsExtremes/reference/rainfall.html</loc>
+  </url>
+  <url>
+    <loc>https://gburitica.github.io/tsExtremes/reference/rmax.html</loc>
   </url>
 </urlset>
