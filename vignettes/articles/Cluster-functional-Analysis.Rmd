@@ -35,10 +35,9 @@ Previously you learnt how to estimate the tail-index of a regularly varying rand
 In this section we consider heavy-tailed time series $(X_t)$ taking values in $\mathbb{R}^d$, and we focus on studying the dependence structure of extremes. 
 The main question that we would like to answer is how one extreme record can trigger future heavy records. 
 
-### Heavy-tailed time series
 
 
-#### Regularly varying time series  
+### Regularly varying time series  
 We now consider an $\mathbb{R}^d$-valued time series $(X_t)$ and we characterize next heavy-tailed series by means of the notion of multivariate regular variation. 
 <br>
 <br>
@@ -54,21 +53,58 @@ as $x \to \infty$, and $|\Theta_0| = 1$. The process $(\Theta_t)$ is called the 
 
 The spectral-tail process plays an important role in the understanding of the space and time dependencies of the extremes of the series. It measures the impact of one extreme record at time zero on the future behavior of the series over finite windows of time. 
 
-__Auto-regressive heavy-tailed time series__ 
+#### Examples
 
-One first example of a regularly varying time series are ARMA processes with heavy-tailed innovations. 
-Consider $(Z_t)$ a sequence of iid innovations admitting a regularly varying distribution with tail index $\alpha > 0$. 
+
+To get a first glimpse at the extremal dependencies of the series, the extremogram introduced in [@davis:mikosch:2009]. 
+It is defined as the sequence $(\chi_t)$ such that
 $$
-X_t = \varphi X_{t-1} + Z_t
+\chi_t = \mathbb{P}( |X_t| > x \mid |X_0| > x) = \mathbb{E}[ 1\land |\Theta_t|^\alpha ], \qquad t > 0,
 $$
+and $(\Theta_t)$ is the **spectral-tail** process of the sequence.
 
-Moreover, we see next that many common time series lie within the framework of heavy-tailed time series. 
 
-__Further examples of heavy-tailed time series__ include linear filters with regularly varying innovations, and also GARCH models. These examples are discussed in all generality in [@kulik:soulier:2020].
+One first example of a regularly varying time series are **ARMA** processes with heavy-tailed innovations. The following code plots the empirical extremogram of the sequence for an $AR(\varphi)$ model $(X_t)$ defined as the solution to the equation
+$$
+X_t = \varphi X_{t-1} + Z_t\,, \quad t \in \mathbb{R}
+$$
+where  $(Z_t)$ are iid regularly varying innovations with tail-index $\alpha > 0$, and $\varphi \in [0,1)$. 
+As a comparison, we also plot the extremogram of the sequence $(Z_t)$. 
 
-#### Weak extremal temporal dependence
+```{r AR example, echo = T,results='hide' ,fig.height = 3, fig.width = 7, fig.align = "center"}
+library(tsExtremes)
+library(VGAM)
+set.seed(123)
+n       <- 4000
+phi     <- 0.5
+alpha   <- 1
+sample  <- ARm(n,phi, Z.gen = function(n) VGAM::rpareto(n, shape = 1/alpha) ) ## Samples from an Autoregressive model. 
+extremogram(sample)
+n       <- 4000
+sample  <- VGAM::rpareto(n, shape = 1/alpha) ## Samples from an Autoregressive model. 
+extremogram(sample)
+```
 
-It is common that the impact of one extreme record at time zero decays over time. In this case, we are in the setting of weak extremal temporal dependence. 
+In this plot the dashed-line corresponds to the baseline behavior in the case of extremal independence, which corresponds to the case $|\Theta_0| = 1$ and $|\Theta_t| = 0$ for $t \not = 0 $. 
+Indeed, this is case for independent regularly varying time series. 
+We see, for $\phi = .5$, that the extremogram of the $AR(\phi)$ model takes large values for the first lags, and after this the behavior is again similar to the one of the iid case. 
+In this case $|\Theta_t| \to 0 $, as $t \to \infty$. This framework of weak extremal dependence is common to numerous time series. 
+In a nutshell, it models the fact that one large record at time zero can't have an impact on the future extremes indefinitely. Instead, for these models we expect that the strength of the extremal dependence decays with time. 
+
+
+__Further examples of heavy-tailed time series__ with short-range extremal dependence include linear filters with regularly varying innovations, and also GARCH models. These examples are discussed in all generality in [@kulik:soulier:2020].
+
+
+It is actually natural in many applications that the impact of one extreme record at time zero decays over time. In this case, we are in the setting of weak extremal temporal dependence and $|\Theta_t| \to 0$, as $t \to \infty$. 
+This is a special cases because extremes occur as clusters of finite length with short windows of time featuring several extremal recordings. 
+In this case, the so-called **extremal index** can be seen as a summary of this clustering behavior. 
+
+
+
+
+
+
+
 
 ### Extremal index
 
